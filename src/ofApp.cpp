@@ -130,7 +130,7 @@ void ofApp::updateTcpServer(){
             
             for (int j = 0; j < chessBoard2s.size(); j++) {
                 chessBoard2 *cb2 = chessBoard2s[j];
-                if (cb2->mId == mId) {
+                if ((cb2->mId == mId) && (activeBoard == 4)) {
                     cb2->tiggerAtPoint(mScreenPoint.x, mScreenPoint.y, mEvent);
                 }
             }
@@ -190,7 +190,9 @@ void ofApp::updateChannels(){
             ofClear(0, 0, 0);
         }
         
-        channel->drawMarker();
+        if (drawMarker) {
+            channel->drawMarker();
+        }
         channel->mTexture.loadScreenData(0, 0, channel->mWidth, channel->mHeight);
         channel->mSyphonServer.publishTexture(&channel->mTexture);
         
@@ -262,6 +264,10 @@ void ofApp::keyPressed(int key){
         setBoardsArrayTrueOnlyAtIndex(5);
     }
     
+    if(key=='m'){
+        drawMarker = !drawMarker;
+    }
+    
     if(key=='q'){
         playAll = !playAll;
         if (playAll) {
@@ -285,13 +291,13 @@ void ofApp::keyPressed(int key){
 
 void ofApp::mousePressed(int x, int y, int button){
     
-    chessBoard2s[activeChannel]->tiggerAtPoint(x, y, "press");
+    triggerChessBoard2(x, y, "press");
     
 }
 
 void ofApp::mouseReleased(int x, int y, int button){
     
-    chessBoard2s[activeChannel]->tiggerAtPoint(x, y, "release");
+    triggerChessBoard2(x, y, "release");
     
 }
 
@@ -305,6 +311,7 @@ void ofApp::setBoardsArrayTrueOnlyAtIndex(int index){
             boardsArray[i]=false;
         }
     }
+    activeBoard = index;
 }
 
 void ofApp::setChannelsArrayTrueOnlyAtIndex(int index){
@@ -354,6 +361,16 @@ void ofApp::parseJSONString(string str){
     float y = mJsonElement["y"].asFloat();
     mScreenPoint = normalizedPointToScreenPoint(ofVec2f(x, y));
     
+    
+}
+
+// ------------------------------------ Boards ------------------------------------
+
+void ofApp::triggerChessBoard2(int x, int y, string event){
+    
+    if (activeBoard == 4) {                                         // 4 is the chessboard. TODO automate this process, so that it's not
+        chessBoard2s[activeChannel]->tiggerAtPoint(x, y, event);    // necessary to lookup the index manually.
+    }
     
 }
 

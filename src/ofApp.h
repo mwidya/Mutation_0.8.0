@@ -50,6 +50,10 @@ public:
     ofVec2f normalizedPointToScreenPoint(ofVec2f);
     void parseJSONString(string str);
     
+    // ------------------------------------ Boards ------------------------------------
+    
+    void triggerChessBoard2(int x, int y, string event);
+    
     // ------------------------------------ Channels ------------------------------------
     
     vector<channel*> channels;
@@ -70,8 +74,10 @@ public:
     bool *boardsArray;
     
     bool playAll;
+    bool drawMarker;
     
     int activeChannel = -1;
+    int activeBoard = -1;
     
     // ------------------------------------ Boards ------------------------------------
     
