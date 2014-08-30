@@ -1,7 +1,7 @@
 #include "ofApp.h"
 #include "constants.h"
 
-#define START_BOARD 4
+#define START_BOARD 5
 
 // ------------------------------------ Setups & Configurations ------------------------------------
 
@@ -95,6 +95,10 @@ void ofApp::setupBoards(){
         chessBoard2 *cb2 = new chessBoard2(&channel->mFbo);
         cb2->mId = channel->mId;
         chessBoard2s.push_back(cb2);
+        
+        movingLightsBoard *mlb = new movingLightsBoard(&channel->mFbo);
+        mlb->mId = channel->mId;
+        movingLightsBoards.push_back(mlb);
     }
 }
 
@@ -110,48 +114,6 @@ void ofApp::setup(){
 
 // ------------------------------------ Updates ------------------------------------
 
-void ofApp::updateSound(){
-    ofSoundUpdate();
-    
-    float * val = ofSoundGetSpectrum(nBandsToGet);
-    
-    for (int i = 0;i < nBandsToGet; i++){
-        
-        fftSmoothed[i] *= 0.96f;
-        if (fftSmoothed[i] < val[i]) fftSmoothed[i] = val[i];
-        
-    }
-}
-
-void ofApp::updateChannel(channel *channel, int index){
-    
-    channel->mFbo.begin();
-    
-    if (channelsArray[index]) {
-        
-        if (boardsArray[0]==true) {
-            chessBoard1s[index]->update(fftSmoothed);
-        }else if (boardsArray[1]==true) {
-            movingFrameBoards[index]->update();
-        }else if (boardsArray[2]==true) {
-            testBoards[index]->update();
-        }else if (boardsArray[3]==true) {
-            oneColorBoards[index]->update();
-        }else if (boardsArray[4]==true) {
-            chessBoard2s[index]->update();
-        }
-        
-    }else{
-        ofClear(0, 0, 0);
-    }
-    channel->drawMarker();
-    channel->mTexture.loadScreenData(0, 0, channel->mWidth, channel->mHeight);
-    channel->mSyphonServer.publishTexture(&channel->mTexture);
-    
-    channel->mFbo.end();
-    
-}
-
 void ofApp::updateTcpServer(){
     
     for(unsigned int i = 0; i <  (unsigned int)tcpServer.getLastID(); i++){
@@ -166,7 +128,6 @@ void ofApp::updateTcpServer(){
             
             parseJSONString(msgRx);
             
-            
             for (int j = 0; j < chessBoard2s.size(); j++) {
                 chessBoard2 *cb2 = chessBoard2s[j];
                 if (cb2->mId == mId) {
@@ -177,18 +138,73 @@ void ofApp::updateTcpServer(){
     }
 }
 
-void ofApp::update(){
+void ofApp::updateSound(){
+    ofSoundUpdate();
     
-    updateSound();
-    updateTcpServer();
+    float * val = ofSoundGetSpectrum(nBandsToGet);
+    
+    for (int i = 0;i < nBandsToGet; i++){
+        
+        fftSmoothed[i] *= 0.96f;
+        if (fftSmoothed[i] < val[i]) fftSmoothed[i] = val[i];
+        
+    }
+}
+
+void ofApp::updateBoardsForChannel(int index){
+    
+    if (boardsArray[0]==true) {
+        chessBoard1s[index]->update(fftSmoothed);
+    }
+    else if (boardsArray[1]==true) {
+        movingFrameBoards[index]->update();
+    }
+    else if (boardsArray[2]==true) {
+        testBoards[index]->update();
+    }
+    else if (boardsArray[3]==true) {
+        oneColorBoards[index]->update();
+    }
+    else if (boardsArray[4]==true) {
+        chessBoard2s[index]->update();
+    }
+    else if (boardsArray[5]==true) {
+        movingLightsBoards[index]->update();
+    }
+    
+}
+
+void ofApp::updateChannels(){
     
     // TODO update channel(s) with activeChannel var?
     for (int i=0; i<channels.size(); i++) {
         
         channel *channel = channels[i];
-        updateChannel(channel, i);
         
+        channel->mFbo.begin();
+        
+        if (channelsArray[i]) {
+            updateBoardsForChannel(i);
+        }
+        else{
+            ofClear(0, 0, 0);
+        }
+        
+        channel->drawMarker();
+        channel->mTexture.loadScreenData(0, 0, channel->mWidth, channel->mHeight);
+        channel->mSyphonServer.publishTexture(&channel->mTexture);
+        
+        channel->mFbo.end();
     }
+    
+}
+
+void ofApp::update(){
+    
+    updateSound();
+    updateTcpServer();
+    updateChannels();
+    
 }
 
 // ------------------------------------ of Lifecycle ------------------------------------
@@ -229,14 +245,21 @@ void ofApp::keyPressed(int key){
     
     if (key=='a') {
         setBoardsArrayTrueOnlyAtIndex(0);
-    }else if(key=='b'){
+    }
+    else if(key=='b'){
         setBoardsArrayTrueOnlyAtIndex(1);
-    }else if(key=='c'){
+    }
+    else if(key=='c'){
         setBoardsArrayTrueOnlyAtIndex(2);
-    }else if(key=='d'){
+    }
+    else if(key=='d'){
         setBoardsArrayTrueOnlyAtIndex(3);
-    }else if(key=='e'){
+    }
+    else if(key=='e'){
         setBoardsArrayTrueOnlyAtIndex(4);
+    }
+    else if(key=='f'){
+        setBoardsArrayTrueOnlyAtIndex(5);
     }
     
     if(key=='q'){

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>4F6CE474-8D1F-458D-B7EC-F518F64A56DE</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Mutation_080</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>2232A442-5AE0-4731-894C-5EB615B17851</key>
+		<string>https://github.com/astellato/ofxSyphon.git</string>
+		<key>B943BEB6-2FBE-4025-8B85-973611EE9A8C</key>
+		<string>https://github.com/jefftimesten/ofxJSON.git</string>
+		<key>EE27A535-DB15-4761-AD9A-7831D4AC5C8B</key>
+		<string>ssh://github.com/mwidya/Mutation_0.8.0.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Mutation_080.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>2232A442-5AE0-4731-894C-5EB615B17851</key>
+		<string>../../../../../addons/ofxSyphon</string>
+		<key>B943BEB6-2FBE-4025-8B85-973611EE9A8C</key>
+		<string>../../../../../addons/ofxJSON</string>
+		<key>EE27A535-DB15-4761-AD9A-7831D4AC5C8B</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/mwidya/Mutation_0.8.0.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>EE27A535-DB15-4761-AD9A-7831D4AC5C8B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>EE27A535-DB15-4761-AD9A-7831D4AC5C8B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Mutation</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>B943BEB6-2FBE-4025-8B85-973611EE9A8C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxJSON</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>2232A442-5AE0-4731-894C-5EB615B17851</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxSyphon</string>
+		</dict>
+	</array>
+</dict>
+</plist>

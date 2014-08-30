@@ -7,6 +7,7 @@
 #include "testBoard.h"
 #include "oneColorBoard.h"
 #include "chessBoard2.h"
+#include "movingLightsBoard.h"
 #include "ofxNetwork.h"
 #include "ofxJSONElement.h"
 
@@ -26,7 +27,8 @@ public:
     // ------------------------------------ Updates ------------------------------------
     
     void updateSound();
-    void updateChannel(channel *channel, int index);
+    void updateBoardsForChannel(int index);
+    void updateChannels();
     void updateTcpServer();
     void update();
     
@@ -64,7 +66,7 @@ public:
     
     int numberofChannels = 10;
     bool *channelsArray;
-    int numberofBoards = 5;
+    int numberofBoards = 6;
     bool *boardsArray;
     
     bool playAll;
@@ -78,6 +80,7 @@ public:
     vector<testBoard*> testBoards;
     vector<oneColorBoard*> oneColorBoards;
     vector<chessBoard2*> chessBoard2s;
+    vector<movingLightsBoard*> movingLightsBoards;
     
     // ------------------------------------ Sound Player ------------------------------------
     
