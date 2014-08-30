@@ -7,6 +7,7 @@
 //
 
 #include "channel.h"
+#include "constants.h"
 
 channel::channel(int width, int height, int glFormat, string syphonServerName){
     
@@ -42,6 +43,8 @@ void channel::setMarker(int id, float x, float y, float width, float height){
 
 void channel::drawMarker(){
     ofSetColor(255, 255, 255);
+    float frame = 20*factor;
+    ofRect(mMarkerX-(frame/2), mMarkerY-(frame/2), mMarkerWidth+frame, mMarkerHeight+frame);
     mMarker.draw(mMarkerX, mMarkerY, mMarkerWidth, mMarkerHeight);
 }
 
