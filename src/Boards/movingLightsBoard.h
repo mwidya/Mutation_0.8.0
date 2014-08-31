@@ -15,7 +15,7 @@
 class movingLightsBoard : public board{
 public:
     movingLightsBoard(ofFbo *fbo);
-    void update();
+    void update(float *fftSmoothed);
 };
 
 #endif /* defined(__Mutation_080__movingLightsBoard__) */

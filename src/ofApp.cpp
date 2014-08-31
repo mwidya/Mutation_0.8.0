@@ -16,9 +16,11 @@ void ofApp::setupArrays(){
 
 void ofApp::setupSound(){
     
-    //    soundPlayer.loadSound("music/02 Blood Stevia Sex Magik.mp3");
-    soundPlayer.loadSound("music/Cmin_geschisse_v3.wav");
-    //    soundPlayer.loadSound("music/St_able_v1.wav");
+//    soundPlayer.loadSound("music/02 Blood Stevia Sex Magik.mp3");
+//    soundPlayer.loadSound("music/Cmin_geschisse_v3.wav");
+//    soundPlayer.loadSound("music/St_able_v1.wav");
+    soundPlayer.loadSound("music/testPattern.mp3");
+    
     
     fftSmoothed = new float[8192];
     for (int i = 0; i < 8192; i++){
@@ -169,7 +171,7 @@ void ofApp::updateBoardsForChannel(int index){
         chessBoard2s[index]->update();
     }
     else if (boardsArray[5]==true) {
-        movingLightsBoards[index]->update();
+        movingLightsBoards[index]->update(fftSmoothed);
     }
     
 }
@@ -222,9 +224,10 @@ void ofApp::draw(){
         channel->draw(0,0);
     }
     
+    ofDrawBitmapString("seconds:" + ofToString((int)ofGetElapsedTimef()) , ofGetWidth()-90, ofGetHeight()-15);
+    
     if (tcpConnected) {
         string str = "TCP server is online at port: " + ofToString(tcpServer.getPort()) + ", clients: " + ofToString(tcpServer.getNumClients());
-        ofSetColor(0, 255, 0);
         ofDrawBitmapString(str, 10, ofGetHeight()-15);
         
         for(unsigned int i = 0; i <  (unsigned int)tcpServer.getLastID(); i++){
@@ -232,7 +235,6 @@ void ofApp::draw(){
                 continue;
             }else{
                 string str = "TCP client with IP " + ofToString(tcpServer.getClientIP(i))+" is connected.";
-                ofSetColor(0, 255, 0);
                 ofDrawBitmapString(str, 10, ofGetHeight()-(15*(i+2)));
             }
         }

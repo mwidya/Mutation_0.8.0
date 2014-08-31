@@ -8,7 +8,8 @@
 
 #include "constants.h"
 
-const float factor = 0.2f;
+const float factor = 0.1f;
+//const float factor = 0.2f; stutter free
 // 1.0 = 1 meter
 const float levelDistance = 3000*factor;
 const float f0f1Distance = 2150*factor;
