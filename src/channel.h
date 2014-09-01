@@ -12,6 +12,10 @@
 #include <iostream>
 #include "ofMain.h"
 #include "ofxSyphon.h"
+#include "chessBoard1.h"
+#include "chessBoard2.h"
+#include "movingFrameBoard.h"
+#include "movingLightsBoard.h"
 
 class channel
 {
@@ -23,6 +27,11 @@ public:
     void setMarker(int id, float x, float y, float width, float height);
     void drawMarker();
     void draw(float x, float y);
+    
+    chessBoard1 *mChessBoard1;
+    chessBoard2 *mChessBoard2;
+    movingFrameBoard *mMovingFrameBoard;
+    movingLightsBoard *mMovingLightsBoard;
     
     int mId;
     

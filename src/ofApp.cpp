@@ -1,7 +1,7 @@
 #include "ofApp.h"
 #include "constants.h"
 
-#define START_BOARD 5
+#define START_BOARD 1
 
 // ------------------------------------ Setups & Configurations ------------------------------------
 
@@ -77,34 +77,45 @@ void ofApp::setupBoards(){
     // Instantiate individual boards for each channel.
     for (int i = 0; i < channels.size(); i++) {
         channel *channel = channels[i];
+        channel->mChessBoard1 = new chessBoard1(&channel->mFbo);
+        channel->mChessBoard2 = new chessBoard2(&channel->mFbo);
+        channel->mMovingFrameBoard = new movingFrameBoard(&channel->mFbo);
+        channel->mMovingLightsBoard = new movingLightsBoard(&channel->mFbo);
         
-        movingFrameBoard *mfb = new movingFrameBoard(&channel->mFbo);
+        /*movingFrameBoard *mfb = new movingFrameBoard(&channel->mFbo);
         mfb->mId = channel->mId;
+        mfb->mChannelNumber = i;
         movingFrameBoards.push_back(mfb);
         
         chessBoard1 *cb1 = new chessBoard1(&channel->mFbo);
         cb1->mId = channel->mId;
+        cb1->mChannelNumber = i;
         chessBoard1s.push_back(cb1);
         
         testBoard *tb = new testBoard(&channel->mFbo);
         tb->mId = channel->mId;
+        tb->mChannelNumber = i;
         testBoards.push_back(tb);
         
         oneColorBoard *ocb = new oneColorBoard(&channel->mFbo);
         ocb->mId = channel->mId;
+        ocb->mChannelNumber = i;
         oneColorBoards.push_back(ocb);
         
         chessBoard2 *cb2 = new chessBoard2(&channel->mFbo);
         cb2->mId = channel->mId;
+        cb2->mChannelNumber = i;
         chessBoard2s.push_back(cb2);
         
         movingLightsBoard *mlb = new movingLightsBoard(&channel->mFbo);
         mlb->mId = channel->mId;
+        mlb->mChannelNumber = i;
         movingLightsBoards.push_back(mlb);
         
         videoPlayerBoard *vpb = new videoPlayerBoard(&channel->mFbo);
         vpb->mId = channel->mId;
-        videoPlayerBoards.push_back(vpb);
+        vpb->mChannelNumber = i;
+        videoPlayerBoards.push_back(vpb);*/
     }
 }
 
@@ -159,27 +170,7 @@ void ofApp::updateSound(){
 
 void ofApp::updateBoardsForChannel(int index){
     
-    if (boardsArray[0]==true) {
-        chessBoard1s[index]->update(fftSmoothed);
-    }
-    else if (boardsArray[1]==true) {
-        movingFrameBoards[index]->update();
-    }
-    else if (boardsArray[2]==true) {
-        testBoards[index]->update();
-    }
-    else if (boardsArray[3]==true) {
-        oneColorBoards[index]->update();
-    }
-    else if (boardsArray[4]==true) {
-        chessBoard2s[index]->update();
-    }
-    else if (boardsArray[5]==true) {
-        movingLightsBoards[index]->update(fftSmoothed);
-    }
-    else if (boardsArray[6]==true) {
-        videoPlayerBoards[index]->update();
-    }
+    
     
 }
 
@@ -193,7 +184,18 @@ void ofApp::updateChannels(){
         channel->mFbo.begin();
         
         if (channelsArray[i]) {
-            updateBoardsForChannel(i);
+            if (boardsArray[0]==true) {
+                channel->mChessBoard1->update(fftSmoothed);
+            }
+            else if (boardsArray[1]==true) {
+                channel->mChessBoard2->update();
+            }
+            else if (boardsArray[2]==true) {
+                channel->mMovingFrameBoard->update();
+            }
+            else if (boardsArray[3]==true) {
+                channel->mMovingLightsBoard->update(fftSmoothed);
+            }
         }
         else{
             ofClear(0, 0, 0);
