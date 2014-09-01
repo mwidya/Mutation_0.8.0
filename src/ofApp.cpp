@@ -1,7 +1,7 @@
 #include "ofApp.h"
 #include "constants.h"
 
-#define START_BOARD 0
+#define START_BOARD 4
 
 // ------------------------------------ Setups & Configurations ------------------------------------
 
@@ -78,46 +78,12 @@ void ofApp::setupBoards(){
     // Instantiate individual boards for each channel.
     for (int i = 0; i < channels.size(); i++) {
         channel *channel = channels[i];
+        channel->mChannelNumber = i;
         channel->mChessBoard1 = new chessBoard1(&channel->mFbo);
         channel->mChessBoard2 = new chessBoard2(&channel->mFbo);
         channel->mMovingFrameBoard = new movingFrameBoard(&channel->mFbo);
         channel->mMovingLightsBoard = new movingLightsBoard(&channel->mFbo);
         channel->mOneColorBoard = new oneColorBoard(&channel->mFbo);
-        
-        /*movingFrameBoard *mfb = new movingFrameBoard(&channel->mFbo);
-        mfb->mId = channel->mId;
-        mfb->mChannelNumber = i;
-        movingFrameBoards.push_back(mfb);
-        
-        chessBoard1 *cb1 = new chessBoard1(&channel->mFbo);
-        cb1->mId = channel->mId;
-        cb1->mChannelNumber = i;
-        chessBoard1s.push_back(cb1);
-        
-        testBoard *tb = new testBoard(&channel->mFbo);
-        tb->mId = channel->mId;
-        tb->mChannelNumber = i;
-        testBoards.push_back(tb);
-        
-        oneColorBoard *ocb = new oneColorBoard(&channel->mFbo);
-        ocb->mId = channel->mId;
-        ocb->mChannelNumber = i;
-        oneColorBoards.push_back(ocb);
-        
-        chessBoard2 *cb2 = new chessBoard2(&channel->mFbo);
-        cb2->mId = channel->mId;
-        cb2->mChannelNumber = i;
-        chessBoard2s.push_back(cb2);
-        
-        movingLightsBoard *mlb = new movingLightsBoard(&channel->mFbo);
-        mlb->mId = channel->mId;
-        mlb->mChannelNumber = i;
-        movingLightsBoards.push_back(mlb);
-        
-        videoPlayerBoard *vpb = new videoPlayerBoard(&channel->mFbo);
-        vpb->mId = channel->mId;
-        vpb->mChannelNumber = i;
-        videoPlayerBoards.push_back(vpb);*/
     }
 }
 
@@ -191,8 +157,30 @@ void ofApp::updateMovingLightsBoard(channel *channel){
 
 
 void ofApp::updateOneColorBoard(channel *channel){
+    if (fftSmoothed[1]>0.5) {
+        if ((channel->mChannelNumber == 0) || (channel->mChannelNumber == 1)) {
+            channel->mOneColorBoard->drawRect();
+        }
+    }
     if (fftSmoothed[1]>1) {
-        channel->mOneColorBoard->drawRect();
+        if ((channel->mChannelNumber == 2) || (channel->mChannelNumber == 3)) {
+            channel->mOneColorBoard->drawRect();
+        }
+    }
+    if (fftSmoothed[1]>1.5) {
+        if ((channel->mChannelNumber == 4) || (channel->mChannelNumber == 5)) {
+            channel->mOneColorBoard->drawRect();
+        }
+    }
+    if (fftSmoothed[1]>2) {
+        if ((channel->mChannelNumber == 6) || (channel->mChannelNumber == 7)) {
+            channel->mOneColorBoard->drawRect();
+        }
+    }
+    if (fftSmoothed[1]>2.5) {
+        if ((channel->mChannelNumber == 8) || (channel->mChannelNumber == 9)) {
+            channel->mOneColorBoard->drawRect();
+        }
     }
     else{
         channel->mOneColorBoard->update();

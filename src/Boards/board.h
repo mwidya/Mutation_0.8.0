@@ -14,6 +14,8 @@
 
 class board{
 public:
+    void clear();
+    
     ofFbo *mFbo;
     int mId;
 };

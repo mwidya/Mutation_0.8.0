@@ -25,6 +25,8 @@ public:
     channel(int width, int height, int glFormat, string syphonServerName);
     ~channel();
     
+    int mChannelNumber;
+    
     void setMarker(int id, float x, float y, float width, float height);
     void drawMarker();
     void draw(float x, float y);

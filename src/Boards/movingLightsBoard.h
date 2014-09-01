@@ -15,6 +15,9 @@
 class movingLightsBoard : public board{
 public:
     movingLightsBoard(ofFbo *fbo);
+    void fadeToBlack();
+    void drawRect(float val);
+    void drawFrame(float val);
     void update(float *fftSmoothed);
 };
 

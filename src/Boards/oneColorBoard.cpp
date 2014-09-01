@@ -13,10 +13,23 @@ oneColorBoard::oneColorBoard(ofFbo *fbo){
     mFont.loadFont("vag.ttf", 50);
 }
 
-void oneColorBoard::update(){
+void oneColorBoard::fadeToBlack(){
+    
+    ofSetColor(0, 0, 0, 20);
+    ofRect(0, 0, mFbo->getWidth(), mFbo->getHeight());
+    
+}
+
+void oneColorBoard::drawRect(){
+    
     ofSetColor(ofColor::gray);
     ofRect(0, 0, mFbo->getWidth(), mFbo->getHeight());
     
     ofSetColor(255,122,220);
     mFont.drawString("Bangin !!!", 100, 100);
+    
+}
+
+void oneColorBoard::update(){
+    fadeToBlack();
 }
