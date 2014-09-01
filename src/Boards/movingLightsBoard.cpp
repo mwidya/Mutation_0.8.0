@@ -15,19 +15,25 @@ movingLightsBoard::movingLightsBoard(ofFbo *fbo){
 
 void movingLightsBoard::update(float *fftSmoothed){
     
+    float width = mFbo->getWidth();
+    float height = mFbo->getHeight();
+    
     float band1 = fftSmoothed[1];
     float band12 = fftSmoothed[12];
     float band38 = fftSmoothed[38];
     
-    ofSetColor(0, 0, 0, 10);
-    ofRect(0, 0, mFbo->getWidth(), mFbo->getHeight());
+    ofSetColor(0, 0, 0, 30*factor);
+    ofRect(0, 0, width, height);
     
     // rect
     
     ofSetColor(255, 255, 255);//stroke color
-    float rectSize = band1;//abs(sin(ofGetElapsedTimef()));
+    float rectSize = band1*0.3;//abs(sin(ofGetElapsedTimef()));
+    if (rectSize<0.1) {
+        rectSize=0;
+    }
     cout << "rectSize = " << rectSize << endl;
-    ofRect(mFbo->getWidth()/2 * (rectSize * (-1) + 1), mFbo->getHeight()/2 * (rectSize * (-1) + 1), mFbo->getWidth() * rectSize, mFbo->getHeight() * rectSize);
+    ofRect(width/2 * (rectSize * (-1) + 1), height/2 * (rectSize * (-1) + 1), width * rectSize, height * rectSize);
     
     // frame
     
@@ -37,10 +43,10 @@ void movingLightsBoard::update(float *fftSmoothed){
     ofSetLineWidth(lineWidth);
     ofSetColor(255, 0, 255);//stroke color
     
-    ofLine(0, halfLineWidth, mFbo->getWidth(), halfLineWidth);
-    ofLine(mFbo->getWidth()-halfLineWidth, 0, mFbo->getWidth()-halfLineWidth, mFbo->getHeight());
-    ofLine(mFbo->getWidth(), mFbo->getHeight()-halfLineWidth, 0, mFbo->getHeight()-halfLineWidth);
-    ofLine(halfLineWidth, mFbo->getHeight(), halfLineWidth, 0);
+    ofLine(0, halfLineWidth, width, halfLineWidth);
+    ofLine(width-halfLineWidth, 0, width-halfLineWidth, height);
+    ofLine(width, height-halfLineWidth, 0, height-halfLineWidth);
+    ofLine(halfLineWidth, height, halfLineWidth, 0);
 }
 
 
