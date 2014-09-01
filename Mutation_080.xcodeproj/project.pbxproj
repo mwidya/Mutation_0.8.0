@@ -51,6 +51,7 @@
 		EE81F64619B1BF5D0004AAD1 /* oneColorBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE81F63E19B1BF5D0004AAD1 /* oneColorBoard.cpp */; };
 		EE81F64719B1BF5D0004AAD1 /* testBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE81F64019B1BF5D0004AAD1 /* testBoard.cpp */; };
 		EE81F64D19B1BFA90004AAD1 /* channel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE81F64819B1BFA90004AAD1 /* channel.cpp */; };
+		EEB2FDA119B4A81000E216A7 /* videoPlayerBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEB2FD9F19B4A81000E216A7 /* videoPlayerBoard.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -169,6 +170,8 @@
 		EE81F64119B1BF5D0004AAD1 /* testBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testBoard.h; sourceTree = "<group>"; };
 		EE81F64819B1BFA90004AAD1 /* channel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = channel.cpp; sourceTree = "<group>"; };
 		EE81F64919B1BFA90004AAD1 /* channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = channel.h; sourceTree = "<group>"; };
+		EEB2FD9F19B4A81000E216A7 /* videoPlayerBoard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = videoPlayerBoard.cpp; sourceTree = "<group>"; };
+		EEB2FDA019B4A81000E216A7 /* videoPlayerBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = videoPlayerBoard.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -489,6 +492,8 @@
 				EE81F64119B1BF5D0004AAD1 /* testBoard.h */,
 				EE119BD619B24B180033DCD6 /* movingLightsBoard.cpp */,
 				EE119BD719B24B180033DCD6 /* movingLightsBoard.h */,
+				EEB2FD9F19B4A81000E216A7 /* videoPlayerBoard.cpp */,
+				EEB2FDA019B4A81000E216A7 /* videoPlayerBoard.h */,
 			);
 			path = Boards;
 			sourceTree = "<group>";
@@ -591,6 +596,7 @@
 				EE81F64519B1BF5D0004AAD1 /* movingFrameBoard.cpp in Sources */,
 				EE81F5D719B1BF100004AAD1 /* ofxTCPClient.cpp in Sources */,
 				EE81F64419B1BF5D0004AAD1 /* chessBoard2.cpp in Sources */,
+				EEB2FDA119B4A81000E216A7 /* videoPlayerBoard.cpp in Sources */,
 				EE81F64319B1BF5D0004AAD1 /* chessBoard1.cpp in Sources */,
 				EE81F62519B1BF280004AAD1 /* SyphonNameboundClient.m in Sources */,
 				EE81F5B719B1BE900004AAD1 /* json_value.cpp in Sources */,

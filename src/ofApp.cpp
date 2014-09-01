@@ -101,6 +101,10 @@ void ofApp::setupBoards(){
         movingLightsBoard *mlb = new movingLightsBoard(&channel->mFbo);
         mlb->mId = channel->mId;
         movingLightsBoards.push_back(mlb);
+        
+        videoPlayerBoard *vpb = new videoPlayerBoard(&channel->mFbo);
+        vpb->mId = channel->mId;
+        videoPlayerBoards.push_back(vpb);
     }
 }
 
@@ -173,6 +177,9 @@ void ofApp::updateBoardsForChannel(int index){
     else if (boardsArray[5]==true) {
         movingLightsBoards[index]->update(fftSmoothed);
     }
+    else if (boardsArray[6]==true) {
+        videoPlayerBoards[index]->update();
+    }
     
 }
 
@@ -240,20 +247,20 @@ void ofApp::draw(){
         }
     }
     
-//    ofEnableAlphaBlending();
-//    ofSetColor(255,255,255,100);
-//    ofRect(100,ofGetHeight()-300,5*128,200);
-//	ofDisableAlphaBlending();
-//	
-//	// draw the fft resutls:
-//	ofSetColor(255,255,255,255);
-//	
-//	float width = (float)(5*128) / nBandsToGet;
-//	for (int i = 0;i < nBandsToGet; i++){
-//		// (we use negative height here, because we want to flip them
-//		// because the top corner is 0,0)
-//		ofRect(100+i*width,ofGetHeight()-100,width,-(fftSmoothed[i] * 200));
-//	}
+    /*ofEnableAlphaBlending();
+    ofSetColor(255,255,255,100);
+    ofRect(100,ofGetHeight()-300,5*128,200);
+	ofDisableAlphaBlending();
+	
+	// draw the fft resutls:
+	ofSetColor(255,255,255,255);
+	
+	float width = (float)(5*128) / nBandsToGet;
+	for (int i = 0;i < nBandsToGet; i++){
+		// (we use negative height here, because we want to flip them
+		// because the top corner is 0,0)
+		ofRect(100+i*width,ofGetHeight()-100,width,-(fftSmoothed[i] * 200));
+	}*/
     
 }
 
@@ -281,9 +288,17 @@ void ofApp::keyPressed(int key){
     else if(key=='f'){
         setBoardsArrayTrueOnlyAtIndex(5);
     }
+    else if(key=='g'){
+        setBoardsArrayTrueOnlyAtIndex(6);
+    }
     
     if(key=='m'){
         drawMarker = !drawMarker;
+    }
+    
+    if (key=='p') {
+        playVideo = !playVideo;
+        videoPlayerBoards[2]->play(playVideo);
     }
     
     if(key=='q'){

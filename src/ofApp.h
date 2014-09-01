@@ -8,6 +8,7 @@
 #include "oneColorBoard.h"
 #include "chessBoard2.h"
 #include "movingLightsBoard.h"
+#include "videoPlayerBoard.h"
 #include "ofxNetwork.h"
 #include "ofxJSONElement.h"
 
@@ -53,6 +54,7 @@ public:
     // ------------------------------------ Boards ------------------------------------
     
     void triggerChessBoard2(int x, int y, string event);
+    bool playVideo;
     
     // ------------------------------------ Channels ------------------------------------
     
@@ -70,7 +72,7 @@ public:
     
     int numberofChannels = 10;
     bool *channelsArray;
-    int numberofBoards = 6;
+    int numberofBoards = 7;
     bool *boardsArray;
     
     bool playAll;
@@ -87,6 +89,7 @@ public:
     vector<oneColorBoard*> oneColorBoards;
     vector<chessBoard2*> chessBoard2s;
     vector<movingLightsBoard*> movingLightsBoards;
+    vector<videoPlayerBoard*> videoPlayerBoards;
     
     // ------------------------------------ Sound Player ------------------------------------
     
