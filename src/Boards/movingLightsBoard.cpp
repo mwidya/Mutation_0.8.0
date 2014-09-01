@@ -22,17 +22,17 @@ void movingLightsBoard::update(float *fftSmoothed){
     float band12 = fftSmoothed[12];
     float band38 = fftSmoothed[38];
     
-    ofSetColor(0, 0, 0, 30*factor);
+    ofSetColor(0, 0, 0, 10);
     ofRect(0, 0, width, height);
     
     // rect
     
-    ofSetColor(255, 255, 255);//stroke color
+    ofSetColor(171, 250, 255);//stroke color
     float rectSize = band1*0.3;//abs(sin(ofGetElapsedTimef()));
     if (rectSize<0.1) {
         rectSize=0;
     }
-    cout << "rectSize = " << rectSize << endl;
+    
     ofRect(width/2 * (rectSize * (-1) + 1), height/2 * (rectSize * (-1) + 1), width * rectSize, height * rectSize);
     
     // frame
@@ -41,7 +41,7 @@ void movingLightsBoard::update(float *fftSmoothed){
     float halfLineWidth = lineWidth/2;
     
     ofSetLineWidth(lineWidth);
-    ofSetColor(255, 0, 255);//stroke color
+    ofSetColor(232, 153, 255);//stroke color
     
     ofLine(0, halfLineWidth, width, halfLineWidth);
     ofLine(width-halfLineWidth, 0, width-halfLineWidth, height);
