@@ -1,7 +1,7 @@
 #include "ofApp.h"
 #include "constants.h"
 
-#define START_BOARD 1
+#define START_BOARD 0
 
 // ------------------------------------ Setups & Configurations ------------------------------------
 
@@ -17,9 +17,9 @@ void ofApp::setupArrays(){
 void ofApp::setupSound(){
     
 //    soundPlayer.loadSound("music/02 Blood Stevia Sex Magik.mp3");
-//    soundPlayer.loadSound("music/Cmin_geschisse_v3.wav");
+    soundPlayer.loadSound("music/Cmin_geschisse_v3.wav");
 //    soundPlayer.loadSound("music/St_able_v1.wav");
-    soundPlayer.loadSound("music/testPattern.mp3");
+//    soundPlayer.loadSound("music/testPattern.mp3");
     
     
     fftSmoothed = new float[8192];
@@ -74,6 +74,7 @@ void ofApp::setupTcpServer(){
 }
 
 void ofApp::setupBoards(){
+    
     // Instantiate individual boards for each channel.
     for (int i = 0; i < channels.size(); i++) {
         channel *channel = channels[i];
@@ -81,6 +82,7 @@ void ofApp::setupBoards(){
         channel->mChessBoard2 = new chessBoard2(&channel->mFbo);
         channel->mMovingFrameBoard = new movingFrameBoard(&channel->mFbo);
         channel->mMovingLightsBoard = new movingLightsBoard(&channel->mFbo);
+        channel->mOneColorBoard = new oneColorBoard(&channel->mFbo);
         
         /*movingFrameBoard *mfb = new movingFrameBoard(&channel->mFbo);
         mfb->mId = channel->mId;
@@ -168,48 +170,81 @@ void ofApp::updateSound(){
     }
 }
 
-void ofApp::updateBoardsForChannel(int index){
+
+void ofApp::updateChessBoard1(channel *channel){
+    channel->mChessBoard1->update(fftSmoothed);
+}
+
+void ofApp::updateChessBoard2(channel *channel){
+    channel->mChessBoard2->update();
+}
+
+void ofApp::updateMovingFrameBoard(channel *channel){
+    channel->mMovingFrameBoard->update();
     
+}
+
+void ofApp::updateMovingLightsBoard(channel *channel){
+    channel->mMovingLightsBoard->update(fftSmoothed);
     
+}
+
+
+void ofApp::updateOneColorBoard(channel *channel){
+    if (fftSmoothed[1]>1) {
+        channel->mOneColorBoard->drawRect();
+    }
+    else{
+        channel->mOneColorBoard->update();
+    }
+}
+
+void ofApp::updateBoardsForChannel(channel *channel){
+    
+    channel->mFbo.begin();
+    
+    if (boardsArray[0]==true) {
+        updateChessBoard1(channel);
+    }
+    else if (boardsArray[1]==true) {
+        updateChessBoard2(channel);
+    }
+    else if (boardsArray[2]==true) {
+        updateMovingFrameBoard(channel);
+    }
+    else if (boardsArray[3]==true) {
+        updateMovingLightsBoard(channel);
+    }
+    else if (boardsArray[4]==true) {
+        updateOneColorBoard(channel);
+    }
+    
+    channel->mTexture.loadScreenData(0, 0, channel->mWidth, channel->mHeight);
+    channel->mSyphonServer.publishTexture(&channel->mTexture);
+    channel->mFbo.end();
     
 }
 
 void ofApp::updateChannels(){
     
-    // TODO update channel(s) with activeChannel var?
     for (int i=0; i<channels.size(); i++) {
-        
         channel *channel = channels[i];
-        
-        channel->mFbo.begin();
-        
-        if (channelsArray[i]) {
-            if (boardsArray[0]==true) {
-                channel->mChessBoard1->update(fftSmoothed);
-            }
-            else if (boardsArray[1]==true) {
-                channel->mChessBoard2->update();
-            }
-            else if (boardsArray[2]==true) {
-                channel->mMovingFrameBoard->update();
-            }
-            else if (boardsArray[3]==true) {
-                channel->mMovingLightsBoard->update(fftSmoothed);
-            }
-        }
-        else{
-            ofClear(0, 0, 0);
-        }
-        
-        if (drawMarker) {
-            channel->drawMarker();
-        }
-        channel->mTexture.loadScreenData(0, 0, channel->mWidth, channel->mHeight);
-        channel->mSyphonServer.publishTexture(&channel->mTexture);
-        
-        channel->mFbo.end();
+        updateBoardsForChannel(channel);
     }
+
     
+    
+//    if (playAll) {
+//        for (int i=0; i<channels.size(); i++) {
+//            channel *channel = channels[i];
+//            updateBoardsForChannel(channel);
+//        }
+//    }
+//    else{
+//        cout << "fftSmoothed[12] = " << fftSmoothed[1] << endl;
+//        
+//        
+//    }
 }
 
 void ofApp::update(){
@@ -252,7 +287,7 @@ void ofApp::draw(){
     /*ofEnableAlphaBlending();
     ofSetColor(255,255,255,100);
     ofRect(100,ofGetHeight()-300,5*128,200);
-	ofDisableAlphaBlending();
+	ofDisableAlphaBlending();*/
 	
 	// draw the fft resutls:
 	ofSetColor(255,255,255,255);
@@ -262,7 +297,7 @@ void ofApp::draw(){
 		// (we use negative height here, because we want to flip them
 		// because the top corner is 0,0)
 		ofRect(100+i*width,ofGetHeight()-100,width,-(fftSmoothed[i] * 200));
-	}*/
+	}
     
 }
 
@@ -403,9 +438,9 @@ void ofApp::parseJSONString(string str){
 
 void ofApp::triggerChessBoard2(int x, int y, string event){
     
-    if (activeBoard == 4) {                                         // 4 is the chessboard. TODO automate this process, so that it's not
-        chessBoard2s[activeChannel]->tiggerAtPoint(x, y, event);    // necessary to lookup the index manually.
-    }
+//    if (activeBoard == 4) {                                         // 4 is the chessboard. TODO automate this process, so that it's not
+        channel4->mChessBoard2->tiggerAtPoint(x, y, event);
+//    }
     
 }
 

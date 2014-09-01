@@ -28,9 +28,14 @@ public:
     // ------------------------------------ Updates ------------------------------------
     
     void updateSound();
-    void updateBoardsForChannel(int index);
-    void updateChannels();
     void updateTcpServer();
+    void updateChessBoard1(channel *channel);
+    void updateChessBoard2(channel *channel);
+    void updateMovingFrameBoard(channel *channel);
+    void updateMovingLightsBoard(channel *channel);
+    void updateOneColorBoard(channel *channel);
+    void updateBoardsForChannel(channel *channel);
+    void updateChannels();
     void update();
     
     // ------------------------------------ of Lifecycle ------------------------------------

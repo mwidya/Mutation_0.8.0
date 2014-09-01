@@ -16,6 +16,7 @@
 #include "chessBoard2.h"
 #include "movingFrameBoard.h"
 #include "movingLightsBoard.h"
+#include "oneColorBoard.h"
 
 class channel
 {
@@ -32,6 +33,7 @@ public:
     chessBoard2 *mChessBoard2;
     movingFrameBoard *mMovingFrameBoard;
     movingLightsBoard *mMovingLightsBoard;
+    oneColorBoard *mOneColorBoard;
     
     int mId;
     
