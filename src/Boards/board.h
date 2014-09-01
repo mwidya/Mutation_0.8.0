@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include "ofMain.h"
+#include "marker.h"
 
 class board{
 public:
@@ -18,6 +19,7 @@ public:
     
     ofFbo *mFbo;
     int mId;
+    marker *mMarker;
 };
 
 #endif /* defined(__Mutation__board__) */

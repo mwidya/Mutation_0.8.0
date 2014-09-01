@@ -80,10 +80,15 @@ void ofApp::setupBoards(){
         channel *channel = channels[i];
         channel->mChannelNumber = i;
         channel->mChessBoard1 = new chessBoard1(&channel->mFbo);
+        channel->mChessBoard1->mMarker = channel->mMarker;
         channel->mChessBoard2 = new chessBoard2(&channel->mFbo);
+        channel->mChessBoard2->mMarker = channel->mMarker;
         channel->mMovingFrameBoard = new movingFrameBoard(&channel->mFbo);
+        channel->mMovingFrameBoard->mMarker = channel->mMarker;
         channel->mMovingLightsBoard = new movingLightsBoard(&channel->mFbo);
+        channel->mMovingLightsBoard->mMarker = channel->mMarker;
         channel->mOneColorBoard = new oneColorBoard(&channel->mFbo);
+        channel->mOneColorBoard->mMarker = channel->mMarker;
     }
 }
 
@@ -136,13 +141,18 @@ void ofApp::updateSound(){
     }
 }
 
-
 void ofApp::updateChessBoard1(channel *channel){
     channel->mChessBoard1->update(fftSmoothed);
 }
 
 void ofApp::updateChessBoard2(channel *channel){
-    channel->mChessBoard2->update();
+    if (channel->mChannelNumber == 4) {
+        channel->mChessBoard2->update();
+        channel->mChessBoard2->mMarker->draw();
+    }else{
+        channel->mChessBoard2->clear();
+        
+    }
 }
 
 void ofApp::updateMovingFrameBoard(channel *channel){
@@ -154,7 +164,6 @@ void ofApp::updateMovingLightsBoard(channel *channel){
     channel->mMovingLightsBoard->update(fftSmoothed);
     
 }
-
 
 void ofApp::updateOneColorBoard(channel *channel){
     if (fftSmoothed[1]>0.5) {
@@ -219,20 +228,7 @@ void ofApp::updateChannels(){
         channel *channel = channels[i];
         updateBoardsForChannel(channel);
     }
-
     
-    
-//    if (playAll) {
-//        for (int i=0; i<channels.size(); i++) {
-//            channel *channel = channels[i];
-//            updateBoardsForChannel(channel);
-//        }
-//    }
-//    else{
-//        cout << "fftSmoothed[12] = " << fftSmoothed[1] << endl;
-//        
-//        
-//    }
 }
 
 void ofApp::update(){

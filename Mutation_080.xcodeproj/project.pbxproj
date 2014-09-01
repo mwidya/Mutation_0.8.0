@@ -28,6 +28,7 @@
 		E7E077E815D3B6510020DFD4 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E715D3B6510020DFD4 /* QTKit.framework */; };
 		E7F985F815E0DEA3003869B5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F985F515E0DE99003869B5 /* Accelerate.framework */; };
 		EE119BD819B24B180033DCD6 /* movingLightsBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE119BD619B24B180033DCD6 /* movingLightsBoard.cpp */; };
+		EE566F6519B5396D0055D78C /* marker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE566F6319B5396D0055D78C /* marker.cpp */; };
 		EE5E937F19B1D2DB000DD715 /* chessField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE5E937D19B1D2DB000DD715 /* chessField.cpp */; };
 		EE5E938319B1E647000DD715 /* constants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE5E938119B1E647000DD715 /* constants.cpp */; };
 		EE81F5B619B1BE900004AAD1 /* json_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE81F59D19B1BE900004AAD1 /* json_reader.cpp */; };
@@ -112,6 +113,8 @@
 		E7F985F515E0DE99003869B5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
 		EE119BD619B24B180033DCD6 /* movingLightsBoard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = movingLightsBoard.cpp; sourceTree = "<group>"; };
 		EE119BD719B24B180033DCD6 /* movingLightsBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = movingLightsBoard.h; sourceTree = "<group>"; };
+		EE566F6319B5396D0055D78C /* marker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = marker.cpp; sourceTree = "<group>"; };
+		EE566F6419B5396D0055D78C /* marker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = marker.h; sourceTree = "<group>"; };
 		EE5E937D19B1D2DB000DD715 /* chessField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = chessField.cpp; sourceTree = "<group>"; };
 		EE5E937E19B1D2DB000DD715 /* chessField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chessField.h; sourceTree = "<group>"; };
 		EE5E938119B1E647000DD715 /* constants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = constants.cpp; path = Boards/constants.cpp; sourceTree = "<group>"; };
@@ -283,6 +286,8 @@
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 				EE81F64819B1BFA90004AAD1 /* channel.cpp */,
 				EE81F64919B1BFA90004AAD1 /* channel.h */,
+				EE566F6319B5396D0055D78C /* marker.cpp */,
+				EE566F6419B5396D0055D78C /* marker.h */,
 				EE81F63519B1BF5D0004AAD1 /* Boards */,
 			);
 			path = src;
@@ -608,6 +613,7 @@
 				EE81F5D919B1BF100004AAD1 /* ofxTCPServer.cpp in Sources */,
 				EE81F64619B1BF5D0004AAD1 /* oneColorBoard.cpp in Sources */,
 				EE81F64D19B1BFA90004AAD1 /* channel.cpp in Sources */,
+				EE566F6519B5396D0055D78C /* marker.cpp in Sources */,
 				EE81F62719B1BF280004AAD1 /* ofxSyphonServer.mm in Sources */,
 				EE5E937F19B1D2DB000DD715 /* chessField.cpp in Sources */,
 			);

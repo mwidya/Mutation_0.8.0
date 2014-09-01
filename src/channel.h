@@ -12,6 +12,7 @@
 #include <iostream>
 #include "ofMain.h"
 #include "ofxSyphon.h"
+#include "marker.h"
 #include "chessBoard1.h"
 #include "chessBoard2.h"
 #include "movingFrameBoard.h"
@@ -24,20 +25,12 @@ class channel
 public:
     channel(int width, int height, int glFormat, string syphonServerName);
     ~channel();
-    
-    int mChannelNumber;
-    
     void setMarker(int id, float x, float y, float width, float height);
-    void drawMarker();
     void draw(float x, float y);
     
-    chessBoard1 *mChessBoard1;
-    chessBoard2 *mChessBoard2;
-    movingFrameBoard *mMovingFrameBoard;
-    movingLightsBoard *mMovingLightsBoard;
-    oneColorBoard *mOneColorBoard;
-    
     int mId;
+    int mChannelNumber;
+    marker *mMarker;
     
     ofTexture mTexture;
     ofxSyphonServer mSyphonServer;
@@ -47,8 +40,12 @@ public:
     int mGlFormat;
     string mSyphonServerName;
     
-    ofImage mMarker;
-    float mMarkerX, mMarkerY, mMarkerWidth, mMarkerHeight;
+    chessBoard1 *mChessBoard1;
+    chessBoard2 *mChessBoard2;
+    movingFrameBoard *mMovingFrameBoard;
+    movingLightsBoard *mMovingLightsBoard;
+    oneColorBoard *mOneColorBoard;
+    
 };
 
 #endif /* defined(__Mutation__channel__) */

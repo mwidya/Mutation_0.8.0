@@ -32,20 +32,9 @@ channel::~channel(){
 }
 
 void channel::setMarker(int id, float x, float y, float width, float height){
-    mId = id;
-    string path = "images/marker_" + ofToString(mId) + ".png";
-    mMarker.loadImage(path);
-    mMarkerX = x;
-    mMarkerY = y;
-    mMarkerWidth = width;
-    mMarkerHeight = height;
-}
 
-void channel::drawMarker(){
-    ofSetColor(255, 255, 255);
-    float frame = 20*factor;
-    ofRect(mMarkerX-(frame/2), mMarkerY-(frame/2), mMarkerWidth+frame, mMarkerHeight+frame);
-    mMarker.draw(mMarkerX, mMarkerY, mMarkerWidth, mMarkerHeight);
+    mMarker = new marker(id, x, y, width, height);
+    
 }
 
 void channel::draw(float x, float y){
