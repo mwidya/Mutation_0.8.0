@@ -25,10 +25,9 @@ public:
 private:
     float mShiftX = 0.0f;
     float mShiftY = 0.0f;
-    float mFadeAmnt = 15 * factor;
+    float mFadeAmnt = 15;
     float mSpeed = 8.0f;
-    // TODO How to include constants.h
-    float stroke = 15.0f;
+    float stroke = 75 * factor;
     int mDirectionX = 1;
     int mDirectionY = 0;
     
