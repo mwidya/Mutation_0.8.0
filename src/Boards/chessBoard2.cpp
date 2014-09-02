@@ -40,7 +40,16 @@ void chessBoard2::tiggerAtPoint(int x_, int y_, string event_){
                 cf->playSound(i);
             }else{
                 cf->setColor(cf->mRed, cf->mGreen, cf->mBlue);
+                
+                chessBoard2DidTriggerAtChessFieldIndex(this, i);
             }
         }
     }
+}
+
+void chessBoard2::chessBoard2DidTriggerAtChessFieldIndex(chessBoard2 *cb2, int i){
+    chessBoard2EventArgs args;
+    args.board = cb2;
+    args.index = i;
+    ofNotifyEvent(events.chessBoard2DidTriggerAtChessFieldIndex, args, this);
 }

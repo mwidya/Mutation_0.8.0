@@ -83,6 +83,7 @@ void ofApp::setupBoards(){
         channel->mChessBoard1->mMarker = channel->mMarker;
         channel->mChessBoard2 = new chessBoard2(&channel->mFbo);
         channel->mChessBoard2->mMarker = channel->mMarker;
+        ofAddListener(channel->mChessBoard2->events.chessBoard2DidTriggerAtChessFieldIndex, this, &ofApp::chessBoard2DidTriggerAtChessFieldIndex);
         channel->mMovingFrameBoard = new movingFrameBoard(&channel->mFbo);
         channel->mMovingFrameBoard->mMarker = channel->mMarker;
         channel->mMovingLightsBoard = new movingLightsBoard(&channel->mFbo);
@@ -468,6 +469,11 @@ void ofApp::parseJSONString(string str){
 }
 
 // ------------------------------------ Boards ------------------------------------
+
+void ofApp::chessBoard2DidTriggerAtChessFieldIndex(chessBoard2EventArgs &arg){
+    
+    cout << "arg.index = " << arg.index << endl;
+}
 
 void ofApp::triggerChessBoard2(int x, int y, string event){
     

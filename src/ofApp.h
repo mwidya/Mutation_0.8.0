@@ -59,6 +59,7 @@ public:
     
     // ------------------------------------ Boards ------------------------------------
     
+    void chessBoard2DidTriggerAtChessFieldIndex(chessBoard2EventArgs &args);
     void triggerChessBoard2(int x, int y, string event);
     bool playVideo;
     int mCount;
