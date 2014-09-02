@@ -16,8 +16,6 @@
 class oneColorBoard : public board{
 public:
     oneColorBoard(ofFbo *fbo);
-    void fadeToBlack();
-    void drawRect();
     void update();
     
 private:

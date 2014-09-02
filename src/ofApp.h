@@ -29,15 +29,15 @@ public:
     
     void updateSound();
     void updateTcpServer();
+    void updateBoardsForChannel(channel *channel);
+    void updateChannels();
+    void update();
+    
     void updateChessBoard1(channel *channel);
     void updateChessBoard2(channel *channel);
     void updateMovingFrameBoard(channel *channel);
     void updateMovingLightsBoard(channel *channel);
     void updateOneColorBoard(channel *channel);
-    void updateMovingCubeBoard(channel *channel);
-    void updateBoardsForChannel(channel *channel);
-    void updateChannels();
-    void update();
     
     // ------------------------------------ of Lifecycle ------------------------------------
     void draw();
@@ -61,6 +61,7 @@ public:
     
     void triggerChessBoard2(int x, int y, string event);
     bool playVideo;
+    int mCount;
     
     // ------------------------------------ Channels ------------------------------------
     

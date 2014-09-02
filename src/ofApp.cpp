@@ -1,7 +1,7 @@
 #include "ofApp.h"
 #include "constants.h"
 
-#define START_BOARD 5
+#define START_BOARD 4
 
 // ------------------------------------ Setups & Configurations ------------------------------------
 
@@ -89,12 +89,12 @@ void ofApp::setupBoards(){
         channel->mMovingLightsBoard->mMarker = channel->mMarker;
         channel->mOneColorBoard = new oneColorBoard(&channel->mFbo);
         channel->mOneColorBoard->mMarker = channel->mMarker;
-        channel->mMovingCubeBoard = new movingCubeBoard(&channel->mFbo);
-        channel->mMovingCubeBoard->mMarker = channel->mMarker;
     }
 }
 
 void ofApp::setup(){
+    
+    ofSetDataPathRoot("../Resources/data/");
     
     setupTcpServer();
     setupArrays();
@@ -143,6 +143,51 @@ void ofApp::updateSound(){
     }
 }
 
+void ofApp::updateBoardsForChannel(channel *channel){
+    
+    channel->mFbo.begin();
+    
+    if (boardsArray[0]==true) {
+        updateChessBoard1(channel);
+    }
+    else if (boardsArray[1]==true) {
+        updateChessBoard2(channel);
+    }
+    else if (boardsArray[2]==true) {
+        updateMovingFrameBoard(channel);
+    }
+    else if (boardsArray[3]==true) {
+        updateMovingLightsBoard(channel);
+    }
+    else if (boardsArray[4]==true) {
+        updateOneColorBoard(channel);
+    }
+    
+    channel->mTexture.loadScreenData(0, 0, channel->mWidth, channel->mHeight);
+    channel->mSyphonServer.publishTexture(&channel->mTexture);
+    channel->mFbo.end();
+    
+}
+
+void ofApp::updateChannels(){
+    
+    for (int i=0; i<channels.size(); i++) {
+        channel *channel = channels[i];
+        updateBoardsForChannel(channel);
+    }
+    
+}
+
+void ofApp::update(){
+    
+    updateSound();
+    updateTcpServer();
+    updateChannels();
+    
+}
+
+// ----- board programs -----
+
 void ofApp::updateChessBoard1(channel *channel){
     channel->mChessBoard1->update(fftSmoothed);
 }
@@ -168,128 +213,72 @@ void ofApp::updateMovingLightsBoard(channel *channel){
 }
 
 void ofApp::updateOneColorBoard(channel *channel){
-    if (fftSmoothed[1]>0.5) {
-        if ((channel->mChannelNumber == 0) || (channel->mChannelNumber == 1)) {
-            channel->mOneColorBoard->drawRect();
+    
+    if (mCount == 1) {
+        if ((channel->mChannelNumber == 1) || (channel->mChannelNumber == 2) || (channel->mChannelNumber == 3)) {
+            channel->mOneColorBoard->update();
+        }
+        else{
+            channel->mOneColorBoard->clear();
         }
     }
-    if (fftSmoothed[1]>1) {
-        if ((channel->mChannelNumber == 2) || (channel->mChannelNumber == 3)) {
-            channel->mOneColorBoard->drawRect();
+    else if (mCount == 2) {
+        if ((channel->mChannelNumber == 1) || (channel->mChannelNumber == 2) || (channel->mChannelNumber == 3) ||
+            (channel->mChannelNumber == 6) || (channel->mChannelNumber == 7) || (channel->mChannelNumber == 8)) {
+            channel->mOneColorBoard->update();
+        }
+        else{
+            channel->mOneColorBoard->clear();
         }
     }
-    if (fftSmoothed[1]>1.5) {
-        if ((channel->mChannelNumber == 4) || (channel->mChannelNumber == 5)) {
-            channel->mOneColorBoard->drawRect();
+    else if (mCount == 3) {
+        if ((channel->mChannelNumber == 0) || (channel->mChannelNumber == 1) || (channel->mChannelNumber == 2) ||
+            (channel->mChannelNumber == 3) || (channel->mChannelNumber == 4)) {
+            channel->mOneColorBoard->update();
+        }
+        else{
+            channel->mOneColorBoard->clear();
         }
     }
-    if (fftSmoothed[1]>2) {
-        if ((channel->mChannelNumber == 6) || (channel->mChannelNumber == 7)) {
-            channel->mOneColorBoard->drawRect();
+    else if (mCount == 4) {
+        if ((channel->mChannelNumber == 5) || (channel->mChannelNumber == 6) || (channel->mChannelNumber == 7) ||
+            (channel->mChannelNumber == 8) || (channel->mChannelNumber == 9)) {
+            channel->mOneColorBoard->update();
         }
-    }
-    if (fftSmoothed[1]>2.5) {
-        if ((channel->mChannelNumber == 8) || (channel->mChannelNumber == 9)) {
-            channel->mOneColorBoard->drawRect();
+        else{
+            channel->mOneColorBoard->clear();
         }
     }
     else{
-        channel->mOneColorBoard->update();
-    }
-}
-
-void ofApp::updateMovingCubeBoard(channel *channel){
-    
-    int count = (int)ofGetElapsedTimeMicros()%5;
-    cout << "count = " << count << endl;
-    if (count == 0) {
-        if (channel->mChannelNumber == 0) {
-            channel->mMovingCubeBoard->update();
+        if (fftSmoothed[1]>0.5) {
+            if ((channel->mChannelNumber == 0) || (channel->mChannelNumber == 1)) {
+                channel->mOneColorBoard->update();
+            }
+        }
+        if (fftSmoothed[1]>1) {
+            if ((channel->mChannelNumber == 2) || (channel->mChannelNumber == 3)) {
+                channel->mOneColorBoard->update();
+            }
+        }
+        if (fftSmoothed[1]>1.5) {
+            if ((channel->mChannelNumber == 4) || (channel->mChannelNumber == 5)) {
+                channel->mOneColorBoard->update();
+            }
+        }
+        if (fftSmoothed[1]>2) {
+            if ((channel->mChannelNumber == 6) || (channel->mChannelNumber == 7)) {
+                channel->mOneColorBoard->update();
+            }
+        }
+        if (fftSmoothed[1]>2.5) {
+            if ((channel->mChannelNumber == 8) || (channel->mChannelNumber == 9)) {
+                channel->mOneColorBoard->update();
+            }
         }
         else{
-            channel->mMovingCubeBoard->clear();
+            channel->mOneColorBoard->clear();
         }
     }
-    else if (count == 1){
-        if ((channel->mChannelNumber == 1) || (channel->mChannelNumber == 2) || (channel->mChannelNumber == 3)) {
-            channel->mMovingCubeBoard->update();
-        }
-        else{
-            channel->mMovingCubeBoard->clear();
-        }
-    }
-    else if (count == 2){
-        if ((channel->mChannelNumber == 4) || (channel->mChannelNumber == 5)) {
-            channel->mMovingCubeBoard->update();
-        }
-        else{
-            channel->mMovingCubeBoard->clear();
-        }
-    }
-    else if (count == 3){
-        if ((channel->mChannelNumber == 6) || (channel->mChannelNumber == 7) || (channel->mChannelNumber == 8)) {
-            channel->mMovingCubeBoard->update();
-        }
-        else{
-            channel->mMovingCubeBoard->clear();
-        }
-    }
-    else if (count == 4){
-        if (channel->mChannelNumber == 9) {
-            channel->mMovingCubeBoard->update();
-        }
-        else{
-            channel->mMovingCubeBoard->clear();
-        }
-    }
-    
-    
-}
-
-void ofApp::updateBoardsForChannel(channel *channel){
-    
-    channel->mFbo.begin();
-    
-    if (boardsArray[0]==true) {
-        updateChessBoard1(channel);
-    }
-    else if (boardsArray[1]==true) {
-        updateChessBoard2(channel);
-    }
-    else if (boardsArray[2]==true) {
-        updateMovingFrameBoard(channel);
-    }
-    else if (boardsArray[3]==true) {
-        updateMovingLightsBoard(channel);
-    }
-    else if (boardsArray[4]==true) {
-        updateOneColorBoard(channel);
-    }
-    else if (boardsArray[5]==true) {
-        updateMovingCubeBoard(channel);
-    }
-    
-    channel->mTexture.loadScreenData(0, 0, channel->mWidth, channel->mHeight);
-    channel->mSyphonServer.publishTexture(&channel->mTexture);
-    channel->mFbo.end();
-    
-}
-
-void ofApp::updateChannels(){
-    
-    for (int i=0; i<channels.size(); i++) {
-        channel *channel = channels[i];
-        updateBoardsForChannel(channel);
-    }
-    
-}
-
-void ofApp::update(){
-    
-    updateSound();
-    updateTcpServer();
-    updateChannels();
-    
 }
 
 // ------------------------------------ of Lifecycle ------------------------------------
@@ -365,6 +354,11 @@ void ofApp::keyPressed(int key){
     else if(key=='g'){
         setBoardsArrayTrueOnlyAtIndex(6);
     }
+    
+    else if(key=='v'){
+        mCount = (mCount+1)%5;
+    }
+    
     
     if(key=='m'){
         drawMarker = !drawMarker;
