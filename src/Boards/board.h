@@ -18,7 +18,6 @@ public:
     void clear();
     
     ofFbo *mFbo;
-    int mId;
     marker *mMarker;
 };
 

@@ -1,7 +1,7 @@
 #include "ofApp.h"
 #include "constants.h"
 
-#define START_BOARD 1
+#define START_BOARD 5
 
 // ------------------------------------ Setups & Configurations ------------------------------------
 
@@ -89,6 +89,8 @@ void ofApp::setupBoards(){
         channel->mMovingLightsBoard->mMarker = channel->mMarker;
         channel->mOneColorBoard = new oneColorBoard(&channel->mFbo);
         channel->mOneColorBoard->mMarker = channel->mMarker;
+        channel->mMovingCubeBoard = new movingCubeBoard(&channel->mFbo);
+        channel->mMovingCubeBoard->mMarker = channel->mMarker;
     }
 }
 
@@ -196,6 +198,54 @@ void ofApp::updateOneColorBoard(channel *channel){
     }
 }
 
+void ofApp::updateMovingCubeBoard(channel *channel){
+    
+    int count = (int)ofGetElapsedTimeMicros()%5;
+    cout << "count = " << count << endl;
+    if (count == 0) {
+        if (channel->mChannelNumber == 0) {
+            channel->mMovingCubeBoard->update();
+        }
+        else{
+            channel->mMovingCubeBoard->clear();
+        }
+    }
+    else if (count == 1){
+        if ((channel->mChannelNumber == 1) || (channel->mChannelNumber == 2) || (channel->mChannelNumber == 3)) {
+            channel->mMovingCubeBoard->update();
+        }
+        else{
+            channel->mMovingCubeBoard->clear();
+        }
+    }
+    else if (count == 2){
+        if ((channel->mChannelNumber == 4) || (channel->mChannelNumber == 5)) {
+            channel->mMovingCubeBoard->update();
+        }
+        else{
+            channel->mMovingCubeBoard->clear();
+        }
+    }
+    else if (count == 3){
+        if ((channel->mChannelNumber == 6) || (channel->mChannelNumber == 7) || (channel->mChannelNumber == 8)) {
+            channel->mMovingCubeBoard->update();
+        }
+        else{
+            channel->mMovingCubeBoard->clear();
+        }
+    }
+    else if (count == 4){
+        if (channel->mChannelNumber == 9) {
+            channel->mMovingCubeBoard->update();
+        }
+        else{
+            channel->mMovingCubeBoard->clear();
+        }
+    }
+    
+    
+}
+
 void ofApp::updateBoardsForChannel(channel *channel){
     
     channel->mFbo.begin();
@@ -214,6 +264,9 @@ void ofApp::updateBoardsForChannel(channel *channel){
     }
     else if (boardsArray[4]==true) {
         updateOneColorBoard(channel);
+    }
+    else if (boardsArray[5]==true) {
+        updateMovingCubeBoard(channel);
     }
     
     channel->mTexture.loadScreenData(0, 0, channel->mWidth, channel->mHeight);

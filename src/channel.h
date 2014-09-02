@@ -18,6 +18,7 @@
 #include "movingFrameBoard.h"
 #include "movingLightsBoard.h"
 #include "oneColorBoard.h"
+#include "movingCubeBoard.h"
 
 class channel
 {
@@ -45,6 +46,7 @@ public:
     movingFrameBoard *mMovingFrameBoard;
     movingLightsBoard *mMovingLightsBoard;
     oneColorBoard *mOneColorBoard;
+    movingCubeBoard *mMovingCubeBoard;
     
 };
 

@@ -53,6 +53,7 @@
 		EE81F64719B1BF5D0004AAD1 /* testBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE81F64019B1BF5D0004AAD1 /* testBoard.cpp */; };
 		EE81F64D19B1BFA90004AAD1 /* channel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE81F64819B1BFA90004AAD1 /* channel.cpp */; };
 		EEB2FDA119B4A81000E216A7 /* videoPlayerBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEB2FD9F19B4A81000E216A7 /* videoPlayerBoard.cpp */; };
+		EECB030019B54CB9002EC5B2 /* movingCubeBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EECB02FE19B54CB9002EC5B2 /* movingCubeBoard.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -175,6 +176,8 @@
 		EE81F64919B1BFA90004AAD1 /* channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = channel.h; sourceTree = "<group>"; };
 		EEB2FD9F19B4A81000E216A7 /* videoPlayerBoard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = videoPlayerBoard.cpp; sourceTree = "<group>"; };
 		EEB2FDA019B4A81000E216A7 /* videoPlayerBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = videoPlayerBoard.h; sourceTree = "<group>"; };
+		EECB02FE19B54CB9002EC5B2 /* movingCubeBoard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = movingCubeBoard.cpp; sourceTree = "<group>"; };
+		EECB02FF19B54CB9002EC5B2 /* movingCubeBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = movingCubeBoard.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -499,6 +502,8 @@
 				EE119BD719B24B180033DCD6 /* movingLightsBoard.h */,
 				EEB2FD9F19B4A81000E216A7 /* videoPlayerBoard.cpp */,
 				EEB2FDA019B4A81000E216A7 /* videoPlayerBoard.h */,
+				EECB02FE19B54CB9002EC5B2 /* movingCubeBoard.cpp */,
+				EECB02FF19B54CB9002EC5B2 /* movingCubeBoard.h */,
 			);
 			path = Boards;
 			sourceTree = "<group>";
@@ -592,6 +597,7 @@
 			files = (
 				EE81F64219B1BF5D0004AAD1 /* board.cpp in Sources */,
 				EE81F62619B1BF280004AAD1 /* ofxSyphonClient.mm in Sources */,
+				EECB030019B54CB9002EC5B2 /* movingCubeBoard.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				EE5E938319B1E647000DD715 /* constants.cpp in Sources */,
 				EE81F62819B1BF280004AAD1 /* ofxSyphonServerDirectory.mm in Sources */,

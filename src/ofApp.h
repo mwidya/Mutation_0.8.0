@@ -34,6 +34,7 @@ public:
     void updateMovingFrameBoard(channel *channel);
     void updateMovingLightsBoard(channel *channel);
     void updateOneColorBoard(channel *channel);
+    void updateMovingCubeBoard(channel *channel);
     void updateBoardsForChannel(channel *channel);
     void updateChannels();
     void update();
