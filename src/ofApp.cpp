@@ -1,7 +1,7 @@
 #include "ofApp.h"
 #include "constants.h"
 
-#define START_BOARD 4
+#define START_BOARD 1
 
 // ------------------------------------ Setups & Configurations ------------------------------------
 
@@ -118,10 +118,10 @@ void ofApp::updateTcpServer(){
             
             parseJSONString(msgRx);
             
-            for (int j = 0; j < chessBoard2s.size(); j++) {
-                chessBoard2 *cb2 = chessBoard2s[j];
-                if ((cb2->mId == mId) && (activeBoard == 4)) {
-                    cb2->tiggerAtPoint(mScreenPoint.x, mScreenPoint.y, mEvent);
+            for (int j = 0; j < channels.size(); j++) {
+                channel *ch = channels[j];
+                if (ch->mChessBoard2->mMarker->mId == mId) {
+                    ch->mChessBoard2->tiggerAtPoint(mScreenPoint.x, mScreenPoint.y, mEvent);
                 }
             }
         }
@@ -405,6 +405,8 @@ ofVec2f ofApp::normalizedPointToScreenPoint(ofVec2f normalizedPoint){
 }
 
 void ofApp::parseJSONString(string str){
+    
+    cout << "str = " << str << endl;
     
     mJsonElement = ofxJSONElement(str);
     

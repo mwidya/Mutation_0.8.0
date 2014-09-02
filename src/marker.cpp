@@ -21,7 +21,7 @@ marker::marker(int id, float x, float y, float width, float height){
 
 void marker::draw(){
     ofSetColor(255, 255, 255);
-    float frame = 20*factor;
+    float frame = 80*factor;
     ofRect(mX-(frame/2), mY-(frame/2), mWidth+frame, mHeight+frame);
     mImage.draw(mX, mY, mWidth, mHeight);
 }
