@@ -55,11 +55,12 @@ void movingLightsBoard::update(float *fftSmoothed){
     
     float band1 = fftSmoothed[1];
     float band12 = fftSmoothed[12];
+    float band32 = fftSmoothed[32];
     float band38 = fftSmoothed[38];
     
     fadeToBlack();
     drawRect(band1);
-    drawFrame(band12);
+    drawFrame(band32*5);
 }
 
 

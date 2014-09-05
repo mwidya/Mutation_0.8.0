@@ -101,7 +101,7 @@ public:
     
     // ------------------------------------ Sound Player ------------------------------------
     
-    ofSoundPlayer soundPlayer;
+    ofSoundPlayer mSoundPlayer;
     bool soundIsPlaying;
     float *fftSmoothed;
     int nBandsToGet;

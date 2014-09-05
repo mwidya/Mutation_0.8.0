@@ -1,7 +1,8 @@
 #include "ofApp.h"
 #include "constants.h"
 
-#define START_BOARD 4
+#define START_CHANNEL 4
+#define START_BOARD 1
 
 // ------------------------------------ Setups & Configurations ------------------------------------
 
@@ -16,10 +17,10 @@ void ofApp::setupArrays(){
 
 void ofApp::setupSound(){
     
-//    soundPlayer.loadSound("music/02 Blood Stevia Sex Magik.mp3");
-    soundPlayer.loadSound("music/Cmin_geschisse_v3.wav");
-//    soundPlayer.loadSound("music/St_able_v1.wav");
-//    soundPlayer.loadSound("music/testPattern.mp3");
+//    mSoundPlayer.loadSound("music/02 Blood Stevia Sex Magik.mp3");
+    mSoundPlayer.loadSound("music/Cmin_geschisse_v3.wav");
+//    mSoundPlayer.loadSound("music/St_able_v1.wav");
+//    mSoundPlayer.loadSound("music/testPattern.mp3");
     
     
     fftSmoothed = new float[8192];
@@ -194,7 +195,7 @@ void ofApp::updateChessBoard1(channel *channel){
 }
 
 void ofApp::updateChessBoard2(channel *channel){
-    if (channel->mChannelNumber == 4) {
+    if (channel->mChannelNumber == START_CHANNEL) {
         channel->mChessBoard2->update();
         channel->mChessBoard2->mMarker->draw();
     }else{
@@ -290,10 +291,17 @@ void ofApp::draw(){
     
     ofSetColor(255, 255, 255);    // draw fbo without color modulation
     
-    if (activeChannel > -1) {
+    for (int i = 0; i<channels.size(); i++) {
+        channel *channel = channels[i];
+        if (i==START_CHANNEL) {
+            channel->draw(0,0);
+        }
+    }
+    
+    /*if (activeChannel > -1) {
         channel *channel = channels[activeChannel];
         channel->draw(0,0);
-    }
+    }*/
     
     ofDrawBitmapString("seconds:" + ofToString((int)ofGetElapsedTimef()) , ofGetWidth()-90, ofGetHeight()-15);
     
@@ -319,11 +327,13 @@ void ofApp::draw(){
 	// draw the fft resutls:
 	ofSetColor(255,255,255,255);
 	
-	float width = (float)(5*128) / nBandsToGet;
+//	float width = (float)(5*128) / nBandsToGet;
+    float width = (float)(ofGetWidth()) / nBandsToGet;
 	for (int i = 0;i < nBandsToGet; i++){
 		// (we use negative height here, because we want to flip them
 		// because the top corner is 0,0)
-		ofRect(100+i*width,ofGetHeight()-100,width,-(fftSmoothed[i] * 200));
+		ofRect(i*width,ofGetHeight()-100,width,-(fftSmoothed[i] * 200));
+        ofDrawBitmapString(ofToString(i), i*width, ofGetHeight()-100-15);
 	}
     
 }
@@ -381,9 +391,9 @@ void ofApp::keyPressed(int key){
     
     if (key == 's') {
         if (!soundIsPlaying) {
-            soundPlayer.play();
+            mSoundPlayer.play();
         }else{
-            soundPlayer.stop();
+            mSoundPlayer.stop();
         }
         
         soundIsPlaying = !soundIsPlaying;
@@ -472,13 +482,22 @@ void ofApp::parseJSONString(string str){
 
 void ofApp::chessBoard2DidTriggerAtChessFieldIndex(chessBoard2EventArgs &arg){
     
-    cout << "arg.index = " << arg.index << endl;
+    if (arg.index == 4) {
+        setBoardsArrayTrueOnlyAtIndex(4);
+        mSoundPlayer.play();
+    }
+    
 }
 
 void ofApp::triggerChessBoard2(int x, int y, string event){
-    
+    for (int i = 0; i<channels.size(); i++) {
+        channel *channel = channels[i];
+        if (i==START_CHANNEL) {
+            channel->mChessBoard2->tiggerAtPoint(x, y, event);
+        }
+    }
 //    if (activeBoard == 4) {                                         // 4 is the chessboard. TODO automate this process, so that it's not
-        channel4->mChessBoard2->tiggerAtPoint(x, y, event);
+//        channel4->mChessBoard2->tiggerAtPoint(x, y, event);
 //    }
     
 }

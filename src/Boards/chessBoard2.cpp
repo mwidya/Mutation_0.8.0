@@ -37,11 +37,15 @@ void chessBoard2::tiggerAtPoint(int x_, int y_, string event_){
         if(cf->inside(x_, y_)){
             if (event_ == "press") {
                 cf->setTempColor(ofRandom(255), ofRandom(255), ofRandom(255));
-                cf->playSound(i);
+                if (i==4) {
+                    chessBoard2DidTriggerAtChessFieldIndex(this, i);
+                }
+                else{
+                    cf->playSound(i);
+                }
+                
             }else{
                 cf->setColor(cf->mRed, cf->mGreen, cf->mBlue);
-                
-                chessBoard2DidTriggerAtChessFieldIndex(this, i);
             }
         }
     }
