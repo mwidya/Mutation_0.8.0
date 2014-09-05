@@ -50,7 +50,7 @@
 		EE81F64419B1BF5D0004AAD1 /* chessBoard2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE81F63A19B1BF5D0004AAD1 /* chessBoard2.cpp */; };
 		EE81F64519B1BF5D0004AAD1 /* movingFrameBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE81F63C19B1BF5D0004AAD1 /* movingFrameBoard.cpp */; };
 		EE81F64619B1BF5D0004AAD1 /* oneColorBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE81F63E19B1BF5D0004AAD1 /* oneColorBoard.cpp */; };
-		EE81F64719B1BF5D0004AAD1 /* testBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE81F64019B1BF5D0004AAD1 /* testBoard.cpp */; };
+		EE81F64719B1BF5D0004AAD1 /* threeDBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE81F64019B1BF5D0004AAD1 /* threeDBoard.cpp */; };
 		EE81F64D19B1BFA90004AAD1 /* channel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE81F64819B1BFA90004AAD1 /* channel.cpp */; };
 		EEB2FDA119B4A81000E216A7 /* videoPlayerBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EEB2FD9F19B4A81000E216A7 /* videoPlayerBoard.cpp */; };
 /* End PBXBuildFile section */
@@ -169,8 +169,8 @@
 		EE81F63D19B1BF5D0004AAD1 /* movingFrameBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = movingFrameBoard.h; sourceTree = "<group>"; };
 		EE81F63E19B1BF5D0004AAD1 /* oneColorBoard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = oneColorBoard.cpp; sourceTree = "<group>"; };
 		EE81F63F19B1BF5D0004AAD1 /* oneColorBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = oneColorBoard.h; sourceTree = "<group>"; };
-		EE81F64019B1BF5D0004AAD1 /* testBoard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testBoard.cpp; sourceTree = "<group>"; };
-		EE81F64119B1BF5D0004AAD1 /* testBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testBoard.h; sourceTree = "<group>"; };
+		EE81F64019B1BF5D0004AAD1 /* threeDBoard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = threeDBoard.cpp; sourceTree = "<group>"; };
+		EE81F64119B1BF5D0004AAD1 /* threeDBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threeDBoard.h; sourceTree = "<group>"; };
 		EE81F64819B1BFA90004AAD1 /* channel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = channel.cpp; sourceTree = "<group>"; };
 		EE81F64919B1BFA90004AAD1 /* channel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = channel.h; sourceTree = "<group>"; };
 		EEB2FD9F19B4A81000E216A7 /* videoPlayerBoard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = videoPlayerBoard.cpp; sourceTree = "<group>"; };
@@ -493,8 +493,8 @@
 				EE81F63D19B1BF5D0004AAD1 /* movingFrameBoard.h */,
 				EE81F63E19B1BF5D0004AAD1 /* oneColorBoard.cpp */,
 				EE81F63F19B1BF5D0004AAD1 /* oneColorBoard.h */,
-				EE81F64019B1BF5D0004AAD1 /* testBoard.cpp */,
-				EE81F64119B1BF5D0004AAD1 /* testBoard.h */,
+				EE81F64019B1BF5D0004AAD1 /* threeDBoard.cpp */,
+				EE81F64119B1BF5D0004AAD1 /* threeDBoard.h */,
 				EE119BD619B24B180033DCD6 /* movingLightsBoard.cpp */,
 				EE119BD719B24B180033DCD6 /* movingLightsBoard.h */,
 				EEB2FD9F19B4A81000E216A7 /* videoPlayerBoard.cpp */,
@@ -606,7 +606,7 @@
 				EE81F62519B1BF280004AAD1 /* SyphonNameboundClient.m in Sources */,
 				EE81F5B719B1BE900004AAD1 /* json_value.cpp in Sources */,
 				EE81F5B819B1BE900004AAD1 /* json_writer.cpp in Sources */,
-				EE81F64719B1BF5D0004AAD1 /* testBoard.cpp in Sources */,
+				EE81F64719B1BF5D0004AAD1 /* threeDBoard.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				EE119BD819B24B180033DCD6 /* movingLightsBoard.cpp in Sources */,
 				EE81F5B919B1BE900004AAD1 /* ofxJSONElement.cpp in Sources */,

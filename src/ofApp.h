@@ -2,13 +2,6 @@
 
 #include "ofMain.h"
 #include "channel.h"
-#include "movingFrameBoard.h"
-#include "chessBoard1.h"
-#include "testBoard.h"
-#include "oneColorBoard.h"
-#include "chessBoard2.h"
-#include "movingLightsBoard.h"
-#include "videoPlayerBoard.h"
 #include "ofxNetwork.h"
 #include "ofxJSONElement.h"
 
@@ -38,6 +31,7 @@ public:
     void updateMovingFrameBoard(channel *channel);
     void updateMovingLightsBoard(channel *channel);
     void updateOneColorBoard(channel *channel);
+    void updateThreeDBoard(channel *channel);
     
     // ------------------------------------ of Lifecycle ------------------------------------
     void draw();
@@ -88,16 +82,6 @@ public:
     
     int activeChannel = -1;
     int activeBoard = -1;
-    
-    // ------------------------------------ Boards ------------------------------------
-    
-    vector<movingFrameBoard*> movingFrameBoards;
-    vector<chessBoard1*> chessBoard1s;
-    vector<testBoard*> testBoards;
-    vector<oneColorBoard*> oneColorBoards;
-    vector<chessBoard2*> chessBoard2s;
-    vector<movingLightsBoard*> movingLightsBoards;
-    vector<videoPlayerBoard*> videoPlayerBoards;
     
     // ------------------------------------ Sound Player ------------------------------------
     

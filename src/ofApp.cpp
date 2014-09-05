@@ -1,8 +1,8 @@
 #include "ofApp.h"
 #include "constants.h"
 
-#define START_CHANNEL 4
-#define START_BOARD 1
+#define START_CHANNEL 0
+#define START_BOARD 5
 
 // ------------------------------------ Setups & Configurations ------------------------------------
 
@@ -80,17 +80,25 @@ void ofApp::setupBoards(){
     for (int i = 0; i < channels.size(); i++) {
         channel *channel = channels[i];
         channel->mChannelNumber = i;
+        
         channel->mChessBoard1 = new chessBoard1(&channel->mFbo);
         channel->mChessBoard1->mMarker = channel->mMarker;
+        
         channel->mChessBoard2 = new chessBoard2(&channel->mFbo);
         channel->mChessBoard2->mMarker = channel->mMarker;
         ofAddListener(channel->mChessBoard2->events.chessBoard2DidTriggerAtChessFieldIndex, this, &ofApp::chessBoard2DidTriggerAtChessFieldIndex);
+        
         channel->mMovingFrameBoard = new movingFrameBoard(&channel->mFbo);
         channel->mMovingFrameBoard->mMarker = channel->mMarker;
+        
         channel->mMovingLightsBoard = new movingLightsBoard(&channel->mFbo);
         channel->mMovingLightsBoard->mMarker = channel->mMarker;
+        
         channel->mOneColorBoard = new oneColorBoard(&channel->mFbo);
         channel->mOneColorBoard->mMarker = channel->mMarker;
+        
+        channel->mThreeDBoard = new threeDBoard(&channel->mFbo);
+        channel->mThreeDBoard->mMarker = channel->mMarker;
     }
 }
 
@@ -163,6 +171,9 @@ void ofApp::updateBoardsForChannel(channel *channel){
     }
     else if (boardsArray[4]==true) {
         updateOneColorBoard(channel);
+    }
+    else if (boardsArray[5]==true) {
+        updateThreeDBoard(channel);
     }
     
     channel->mTexture.loadScreenData(0, 0, channel->mWidth, channel->mHeight);
@@ -283,6 +294,11 @@ void ofApp::updateOneColorBoard(channel *channel){
     }
 }
 
+void ofApp::updateThreeDBoard(channel *channel){
+        channel->mThreeDBoard->update();
+    
+}
+
 // ------------------------------------ of Lifecycle ------------------------------------
 
 void ofApp::draw(){
@@ -335,10 +351,14 @@ void ofApp::draw(){
 		ofRect(i*width,ofGetHeight()-100,width,-(fftSmoothed[i] * 200));
         ofDrawBitmapString(ofToString(i), i*width, ofGetHeight()-100-15);
 	}
-    
 }
 
 void ofApp::keyPressed(int key){
+    
+    for (int i = 0; i<channels.size(); i++) {
+        channel *ch = channels[i];
+        ch->mThreeDBoard->keyPressed(key);
+    }
     
     if (48 <= key && key <= 57) {
         setChannelsArrayTrueOnlyAtIndex(key - 48); // 0 has ASCII value 48
@@ -373,11 +393,6 @@ void ofApp::keyPressed(int key){
     
     if(key=='m'){
         drawMarker = !drawMarker;
-    }
-    
-    if (key=='p') {
-        playVideo = !playVideo;
-        videoPlayerBoards[2]->play(playVideo);
     }
     
     if(key=='q'){
