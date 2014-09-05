@@ -17,6 +17,7 @@ class threeDBoard : public board {
 public:
     threeDBoard(ofFbo *fbo);
     void update();
+    void setup();
     void keyPressed(int key);
     
     bool bFill;
@@ -28,7 +29,6 @@ public:
     bool bMousePressed;
     bool bSplitFaces;
     
-    ofImage texture;
     int mode;
     
     ofBoxPrimitive box;

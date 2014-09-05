@@ -98,7 +98,21 @@ void ofApp::setupBoards(){
         channel->mOneColorBoard->mMarker = channel->mMarker;
         
         channel->mThreeDBoard = new threeDBoard(&channel->mFbo);
+        channel->mThreeDBoard->mChannelNumber = channel->mChannelNumber;
         channel->mThreeDBoard->mMarker = channel->mMarker;
+    }
+    
+    for (int i = 0; i < channels.size(); i++) {
+        channel *channel = channels[i];
+        if (i>0) {
+            channel->mThreeDBoard->mAscendantBoard = channels[i-1]->mThreeDBoard;
+        }
+        if (i<9) {
+            channel->mThreeDBoard->mDescendantBoard = channels[i+1]->mThreeDBoard;
+        }
+        
+        channel->mThreeDBoard->setup();
+        
     }
 }
 
@@ -309,15 +323,10 @@ void ofApp::draw(){
     
     for (int i = 0; i<channels.size(); i++) {
         channel *channel = channels[i];
-        if (i==START_CHANNEL) {
+        if (i==activeChannel) {
             channel->draw(0,0);
         }
     }
-    
-    /*if (activeChannel > -1) {
-        channel *channel = channels[activeChannel];
-        channel->draw(0,0);
-    }*/
     
     ofDrawBitmapString("seconds:" + ofToString((int)ofGetElapsedTimef()) , ofGetWidth()-90, ofGetHeight()-15);
     
@@ -334,20 +343,10 @@ void ofApp::draw(){
             }
         }
     }
-    
-    /*ofEnableAlphaBlending();
-    ofSetColor(255,255,255,100);
-    ofRect(100,ofGetHeight()-300,5*128,200);
-	ofDisableAlphaBlending();*/
 	
-	// draw the fft resutls:
 	ofSetColor(255,255,255,255);
-	
-//	float width = (float)(5*128) / nBandsToGet;
     float width = (float)(ofGetWidth()) / nBandsToGet;
 	for (int i = 0;i < nBandsToGet; i++){
-		// (we use negative height here, because we want to flip them
-		// because the top corner is 0,0)
 		ofRect(i*width,ofGetHeight()-100,width,-(fftSmoothed[i] * 200));
         ofDrawBitmapString(ofToString(i), i*width, ofGetHeight()-100-15);
 	}
@@ -511,10 +510,6 @@ void ofApp::triggerChessBoard2(int x, int y, string event){
             channel->mChessBoard2->tiggerAtPoint(x, y, event);
         }
     }
-//    if (activeBoard == 4) {                                         // 4 is the chessboard. TODO automate this process, so that it's not
-//        channel4->mChessBoard2->tiggerAtPoint(x, y, event);
-//    }
-    
 }
 
 

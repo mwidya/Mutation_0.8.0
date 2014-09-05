@@ -19,6 +19,10 @@ public:
     
     ofFbo *mFbo;
     marker *mMarker;
+    int mChannelNumber;
+    
+    board *mAscendantBoard;
+    board *mDescendantBoard;
 };
 
 #endif /* defined(__Mutation__board__) */

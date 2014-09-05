@@ -13,13 +13,15 @@ threeDBoard::threeDBoard(ofFbo *fbo){
     
     mFbo = fbo;
     
+}
+
+void threeDBoard::setup(){
+    
     ofSetVerticalSync(true);
 	ofBackground(20);
     
     // GL_REPEAT for texture wrap only works with NON-ARB textures //
     ofDisableArbTex();
-    texture.loadImage("of.png");
-    texture.getTextureReference().setTextureWrap( GL_REPEAT, GL_REPEAT );
     
     bFill       = true;
     bWireframe  = true;
@@ -33,7 +35,13 @@ threeDBoard::threeDBoard(ofFbo *fbo){
     float width     = mFbo->getWidth() * .12;
     float height    = mFbo->getHeight() * .12;
     
-    box.set( width*1.25 );
+    if (mChannelNumber==7 || mChannelNumber==8 || mChannelNumber==2 || mChannelNumber==3) {
+        box.set(mFbo->getWidth()*.5, mFbo->getHeight()*.5, mAscendantBoard->mFbo->getHeight()*.5f);
+    }
+    if (mChannelNumber==6 || mChannelNumber==1) {
+        box.set(mFbo->getWidth()*.5, mFbo->getHeight()*.5, mDescendantBoard->mFbo->getHeight()*.5f);
+    }
+    
     
     mode = 0;
     
@@ -52,7 +60,7 @@ threeDBoard::threeDBoard(ofFbo *fbo){
     // the light highlight of the material //
 	material.setSpecularColor(ofColor(255, 255, 255, 255));
     
-    ofSetSphereResolution(24);
+    ofSetSphereResolution(12);
     
 }
 
@@ -91,10 +99,8 @@ void threeDBoard::update(){
     ofNoFill();
     ofDrawSphere(mFbo->getWidth()/2, mFbo->getHeight()/2, mFbo->getWidth());
     
-    if(mode == 1 || mode == 3) texture.getTextureReference().bind();
-    
     // Box //
-    box.setPosition(mFbo->getWidth()*.5, mFbo->getHeight()*.5, 0);
+    box.setPosition(mFbo->getWidth()*.5, mFbo->getHeight()*.5, -100);
     box.rotate(spinX, 1.0, 0.0, 0.0);
     
     if(bFill) {
@@ -124,8 +130,6 @@ void threeDBoard::update(){
         box.drawWireframe();
         box.setScale(1.f);
     }
-    
-    if(mode == 1 || mode == 3) texture.getTextureReference().unbind();
     
     material.end();
     ofDisableLighting();
@@ -223,11 +227,6 @@ void threeDBoard::keyPressed(int key) {
             }
             break;
 	}
-    
-    if(mode == 1) {
-        // setTexCoordsFromTexture sets normalized or non-normalized tex coords based on an ofTexture passed in.
-        box.mapTexCoordsFromTexture( texture.getTextureReference() );
-    }
     
     //
     if( mode == 3 ) {
