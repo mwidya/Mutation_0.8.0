@@ -32,9 +32,6 @@ void threeDBoard::setup(){
     bMousePressed   = false;
     bSplitFaces = false;
     
-    float width     = mFbo->getWidth() * .12;
-    float height    = mFbo->getHeight() * .12;
-    
     if (mChannelNumber==7 || mChannelNumber==8 || mChannelNumber==2 || mChannelNumber==3) {
         box.set(mFbo->getWidth()*.5, mFbo->getHeight()*.5, mAscendantBoard->mFbo->getHeight()*.5f);
     }
@@ -60,7 +57,7 @@ void threeDBoard::setup(){
     // the light highlight of the material //
 	material.setSpecularColor(ofColor(255, 255, 255, 255));
     
-    ofSetSphereResolution(12);
+//    ofSetSphereResolution(12);
     
 }
 
@@ -97,7 +94,7 @@ void threeDBoard::update(){
     
     ofSetColor(180);
     ofNoFill();
-    ofDrawSphere(mFbo->getWidth()/2, mFbo->getHeight()/2, mFbo->getWidth());
+//    ofDrawSphere(mFbo->getWidth()/2, mFbo->getHeight()/2, mFbo->getWidth());
     
     // Box //
     box.setPosition(mFbo->getWidth()*.5, mFbo->getHeight()*.5, -100);

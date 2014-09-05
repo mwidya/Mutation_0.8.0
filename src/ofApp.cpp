@@ -1,7 +1,7 @@
 #include "ofApp.h"
 #include "constants.h"
 
-#define START_CHANNEL 0
+#define START_CHANNEL 1
 #define START_BOARD 5
 
 // ------------------------------------ Setups & Configurations ------------------------------------
@@ -40,7 +40,7 @@ void ofApp::setupChannels(){
     channel1 = new channel(f1Long, f1Short, GL_RGBA32F_ARB, "F1");
     channel1->setMarker(268, f1MarkerX, f1MarkerY, f1MarkerWidth, f1MarkerHeight);
     channels.push_back(channel1);
-    channel2 = new channel(f2Long, f2Short, GL_RGBA32F_ARB, "F2");
+    channel2 = new channel(f2Short, f2Long, GL_RGBA32F_ARB, "F2");
     channel2->setMarker(581, f2MarkerX, f2MarkerY, f2MarkerWidth, f2MarkerHeight);
     channels.push_back(channel2);
     channel3 = new channel(f3Long, f3Short, GL_RGBA32F_ARB, "F3");
@@ -309,7 +309,10 @@ void ofApp::updateOneColorBoard(channel *channel){
 }
 
 void ofApp::updateThreeDBoard(channel *channel){
+    if ((channel->mChannelNumber == 1) || (channel->mChannelNumber == 2) || (channel->mChannelNumber == 3) ||
+        (channel->mChannelNumber == 6) || (channel->mChannelNumber == 7) || (channel->mChannelNumber == 8)) {
         channel->mThreeDBoard->update();
+    }
     
 }
 
@@ -354,10 +357,10 @@ void ofApp::draw(){
 
 void ofApp::keyPressed(int key){
     
-    for (int i = 0; i<channels.size(); i++) {
+    /*for (int i = 0; i<channels.size(); i++) {
         channel *ch = channels[i];
         ch->mThreeDBoard->keyPressed(key);
-    }
+    }*/
     
     if (48 <= key && key <= 57) {
         setChannelsArrayTrueOnlyAtIndex(key - 48); // 0 has ASCII value 48

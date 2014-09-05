@@ -32,4 +32,7 @@ void oneColorBoard::update(){
     ofLine(mFbo->getWidth()-halfLineWidth, 0, mFbo->getWidth()-halfLineWidth, mFbo->getHeight());
     ofLine(mFbo->getWidth(), mFbo->getHeight()-halfLineWidth, 0, mFbo->getHeight()-halfLineWidth);
     ofLine(halfLineWidth, mFbo->getHeight(), halfLineWidth, 0);
+    
+    ofSetColor(0, 255, 0);//stroke color
+    mFont.drawString("Boundries", 20, mFbo->getHeight()-20);
 }
