@@ -11,7 +11,6 @@ public:
     
     // ------------------------------------ Setups & Configurations ------------------------------------
     
-    void setupArrays();
     void setupSound();
     void setupChannels();
     void setupTcpServer();
@@ -42,9 +41,6 @@ public:
     // ------------------------------------ Channel controlling ------------------------------------
     
     void setBoardsArrayTrueOnlyAtIndex(int index);
-    void setChannelsArrayTrueOnlyAtIndex(int index);
-    void setChannelsArrayTrue();
-    void setChannelsArrayFalse();
     
     // ------------------------------------ Network Communication ------------------------------------
     
@@ -54,8 +50,6 @@ public:
     // ------------------------------------ Boards ------------------------------------
     
     void chessBoard2DidTriggerAtChessFieldIndex(chessBoard2EventArgs &args);
-    void triggerChessBoard2(int x, int y, string event);
-    bool playVideo;
     int mCount;
     
     // ------------------------------------ Channels ------------------------------------
@@ -72,13 +66,8 @@ public:
     channel *channel8;
     channel *channel9;
     
-    int numberofChannels = 10;
-    bool *channelsArray;
     int numberofBoards = 7;
     bool *boardsArray;
-    
-    bool playAll;
-    bool drawMarker;
     
     int activeChannel = -1;
     int activeBoard = -1;

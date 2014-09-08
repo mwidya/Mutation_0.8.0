@@ -20,6 +20,8 @@ void threeDBoard::setup(){
     float width = mFbo->getWidth();
     float height = mFbo->getHeight();
     
+    offsetZ = 0.0f;
+    
     if ( mChannelNumber==2 || mChannelNumber==3 || mChannelNumber==7 || mChannelNumber==8) {
         box.set(width, height, mAscendantBoard->mFbo->getHeight());
         box.setPosition(width*.5f, height*.5f, -(mAscendantBoard->mFbo->getHeight()));

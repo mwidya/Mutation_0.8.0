@@ -21,6 +21,7 @@ public:
     void setup();
     
     ofBoxPrimitive box;
+    float offsetZ;
     
 };
 

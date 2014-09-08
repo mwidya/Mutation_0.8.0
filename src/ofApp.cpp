@@ -6,15 +6,6 @@
 
 // ------------------------------------ Setups & Configurations ------------------------------------
 
-void ofApp::setupArrays(){
-    
-    channelsArray = new bool[numberofChannels];
-    setChannelsArrayTrueOnlyAtIndex(START_CHANNEL);
-    boardsArray = new bool[numberofBoards];
-    setBoardsArrayTrueOnlyAtIndex(START_BOARD);
-    
-}
-
 void ofApp::setupSound(){
     
 //    mSoundPlayer.loadSound("music/02 Blood Stevia Sex Magik.mp3");
@@ -64,6 +55,8 @@ void ofApp::setupChannels(){
     channel9 = new channel(f9Long, f9Short, GL_RGBA32F_ARB, "F9");
     channel9->setMarker(903, f9MarkerX, f9MarkerY, f9MarkerWidth, f9MarkerHeight);
     channels.push_back(channel9);
+    
+    activeChannel = START_CHANNEL;
     
 }
 
@@ -115,6 +108,9 @@ void ofApp::setupBoards(){
         channel->mThreeDBoard->setup();
         
     }
+    
+    boardsArray = new bool[numberofBoards];
+    setBoardsArrayTrueOnlyAtIndex(START_BOARD);
 }
 
 void ofApp::setup(){
@@ -122,7 +118,6 @@ void ofApp::setup(){
     ofSetDataPathRoot("../Resources/data/");
     
     setupTcpServer();
-    setupArrays();
     setupSound();
     setupChannels();
     setupBoards();
@@ -314,6 +309,9 @@ void ofApp::updateThreeDBoard(channel *channel){
         (channel->mChannelNumber == 6) || (channel->mChannelNumber == 7) || (channel->mChannelNumber == 8)) {
         channel->mThreeDBoard->update();
     }
+    else{
+        channel->mThreeDBoard->clear();
+    }
     
 } // Board F
 
@@ -360,7 +358,7 @@ void ofApp::draw(){
 void ofApp::keyPressed(int key){
     
     if (48 <= key && key <= 57) {
-        setChannelsArrayTrueOnlyAtIndex(key - 48); // 0 has ASCII value 48
+        activeChannel = (key - 48); // 0 has ASCII value 48
     }
     
     if (key=='a') {
@@ -389,20 +387,6 @@ void ofApp::keyPressed(int key){
         mCount = (mCount+1)%5;
     }
     
-    
-    if(key=='m'){
-        drawMarker = !drawMarker;
-    }
-    
-    if(key=='q'){
-        playAll = !playAll;
-        if (playAll) {
-            setChannelsArrayTrue();
-        }else{
-            setChannelsArrayFalse();
-        }
-    }
-    
     if (key == 's') {
         if (!soundIsPlaying) {
             mSoundPlayer.play();
@@ -416,14 +400,22 @@ void ofApp::keyPressed(int key){
 }
 
 void ofApp::mousePressed(int x, int y, int button){
-    
-    triggerChessBoard2(x, y, "press");
+    for (int i = 0; i<channels.size(); i++) {
+        channel *channel = channels[i];
+        if (i==4) {
+            channel->mChessBoard2->tiggerAtPoint(x, y, "press");
+        }
+    }
     
 }
 
 void ofApp::mouseReleased(int x, int y, int button){
-    
-    triggerChessBoard2(x, y, "release");
+    for (int i = 0; i<channels.size(); i++) {
+        channel *channel = channels[i];
+        if (i==4) {
+            channel->mChessBoard2->tiggerAtPoint(x, y, "release");
+        }
+    }
     
 }
 
@@ -438,31 +430,6 @@ void ofApp::setBoardsArrayTrueOnlyAtIndex(int index){
         }
     }
     activeBoard = index;
-}
-
-void ofApp::setChannelsArrayTrueOnlyAtIndex(int index){
-    for (int i = 0; i < numberofChannels; i++) {
-        if (i==index) {
-            channelsArray[index]=true;
-        }else{
-            channelsArray[i]=false;
-        }
-    }
-    activeChannel = index;
-}
-
-void ofApp::setChannelsArrayTrue(){
-    for (int i = 0; i < numberofChannels; i++) {
-        channelsArray[i]=true;
-    }
-    activeChannel = 0;
-}
-
-void ofApp::setChannelsArrayFalse(){
-    for (int i = 0; i < numberofChannels; i++) {
-        channelsArray[i]=false;
-    }
-    activeChannel = -1;
 }
 
 // ------------------------------------ Network Communication ------------------------------------
@@ -494,6 +461,8 @@ void ofApp::parseJSONString(string str){
 
 // ------------------------------------ Boards ------------------------------------
 
+// ----- chessBoard2 delegate -----
+
 void ofApp::chessBoard2DidTriggerAtChessFieldIndex(chessBoard2EventArgs &arg){
     
     if (arg.index == 4) {
@@ -501,15 +470,6 @@ void ofApp::chessBoard2DidTriggerAtChessFieldIndex(chessBoard2EventArgs &arg){
         mSoundPlayer.play();
     }
     
-}
-
-void ofApp::triggerChessBoard2(int x, int y, string event){
-    for (int i = 0; i<channels.size(); i++) {
-        channel *channel = channels[i];
-        if (i==4) {
-            channel->mChessBoard2->tiggerAtPoint(x, y, event);
-        }
-    }
 }
 
 
