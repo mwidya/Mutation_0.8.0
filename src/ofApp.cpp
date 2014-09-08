@@ -1,7 +1,7 @@
 #include "ofApp.h"
 #include "constants.h"
 
-#define START_CHANNEL 1
+#define START_CHANNEL 2
 #define START_BOARD 5
 
 // ------------------------------------ Setups & Configurations ------------------------------------
@@ -9,7 +9,7 @@
 void ofApp::setupArrays(){
     
     channelsArray = new bool[numberofChannels];
-    setChannelsArrayTrue();
+    setChannelsArrayTrueOnlyAtIndex(START_CHANNEL);
     boardsArray = new bool[numberofBoards];
     setBoardsArrayTrueOnlyAtIndex(START_BOARD);
     
@@ -86,7 +86,8 @@ void ofApp::setupBoards(){
         
         channel->mChessBoard2 = new chessBoard2(&channel->mFbo);
         channel->mChessBoard2->mMarker = channel->mMarker;
-        ofAddListener(channel->mChessBoard2->events.chessBoard2DidTriggerAtChessFieldIndex, this, &ofApp::chessBoard2DidTriggerAtChessFieldIndex);
+        ofAddListener(channel->mChessBoard2->events.chessBoard2DidTriggerAtChessFieldIndex,
+                      this, &ofApp::chessBoard2DidTriggerAtChessFieldIndex);
         
         channel->mMovingFrameBoard = new movingFrameBoard(&channel->mFbo);
         channel->mMovingFrameBoard->mMarker = channel->mMarker;
@@ -217,27 +218,27 @@ void ofApp::update(){
 
 void ofApp::updateChessBoard1(channel *channel){
     channel->mChessBoard1->update(fftSmoothed);
-}
+} // Board A
 
 void ofApp::updateChessBoard2(channel *channel){
-    if (channel->mChannelNumber == START_CHANNEL) {
+    if (channel->mChannelNumber == 4) {
         channel->mChessBoard2->update();
         channel->mChessBoard2->mMarker->draw();
     }else{
         channel->mChessBoard2->clear();
         
     }
-}
+} // Board B
 
 void ofApp::updateMovingFrameBoard(channel *channel){
     channel->mMovingFrameBoard->update();
     
-}
+} // Board C
 
 void ofApp::updateMovingLightsBoard(channel *channel){
     channel->mMovingLightsBoard->update(fftSmoothed);
     
-}
+} // Board D
 
 void ofApp::updateOneColorBoard(channel *channel){
     
@@ -306,7 +307,7 @@ void ofApp::updateOneColorBoard(channel *channel){
             channel->mOneColorBoard->clear();
         }
     }
-}
+} // Board E
 
 void ofApp::updateThreeDBoard(channel *channel){
     if ((channel->mChannelNumber == 1) || (channel->mChannelNumber == 2) || (channel->mChannelNumber == 3) ||
@@ -314,7 +315,7 @@ void ofApp::updateThreeDBoard(channel *channel){
         channel->mThreeDBoard->update();
     }
     
-}
+} // Board F
 
 // ------------------------------------ of Lifecycle ------------------------------------
 
@@ -331,8 +332,6 @@ void ofApp::draw(){
         }
     }
     
-    ofDrawBitmapString("seconds:" + ofToString((int)ofGetElapsedTimef()) , ofGetWidth()-90, ofGetHeight()-15);
-    
     if (tcpConnected) {
         string str = "TCP server is online at port: " + ofToString(tcpServer.getPort()) + ", clients: " + ofToString(tcpServer.getNumClients());
         ofDrawBitmapString(str, 10, ofGetHeight()-15);
@@ -346,6 +345,9 @@ void ofApp::draw(){
             }
         }
     }
+    
+    ofDrawBitmapString("framerate:" + ofToString(ofGetFrameRate()) , ofGetWidth()-290, ofGetHeight()-15);
+    ofDrawBitmapString("seconds:" + ofToString((int)ofGetElapsedTimef()) , ofGetWidth()-100, ofGetHeight()-15);
 	
 	ofSetColor(255,255,255,255);
     float width = (float)(ofGetWidth()) / nBandsToGet;
@@ -356,11 +358,6 @@ void ofApp::draw(){
 }
 
 void ofApp::keyPressed(int key){
-    
-    /*for (int i = 0; i<channels.size(); i++) {
-        channel *ch = channels[i];
-        ch->mThreeDBoard->keyPressed(key);
-    }*/
     
     if (48 <= key && key <= 57) {
         setChannelsArrayTrueOnlyAtIndex(key - 48); // 0 has ASCII value 48
@@ -509,7 +506,7 @@ void ofApp::chessBoard2DidTriggerAtChessFieldIndex(chessBoard2EventArgs &arg){
 void ofApp::triggerChessBoard2(int x, int y, string event){
     for (int i = 0; i<channels.size(); i++) {
         channel *channel = channels[i];
-        if (i==START_CHANNEL) {
+        if (i==4) {
             channel->mChessBoard2->tiggerAtPoint(x, y, event);
         }
     }

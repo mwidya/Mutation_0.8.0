@@ -15,34 +15,12 @@
 
 class threeDBoard : public board {
 public:
+    
     threeDBoard(ofFbo *fbo);
     void update();
     void setup();
-    void keyPressed(int key);
-    
-    bool bFill;
-    bool bWireframe;
-    bool bDrawNormals;
-    bool bDrawAxes;
-    bool bDrawLights;
-    bool bInfoText;
-    bool bMousePressed;
-    bool bSplitFaces;
-    
-    int mode;
     
     ofBoxPrimitive box;
-    
-    ofLight pointLight;
-    ofLight pointLight2;
-    ofLight pointLight3;
-    ofMaterial material;
-    
-    // place to store the sides of the box //
-    ofVboMesh boxSides[ofBoxPrimitive::SIDES_TOTAL];
-    ofVboMesh deformPlane;
-    ofVboMesh topCap, bottomCap, body;
-    vector<ofMeshFace> triangles;
     
 };
 
