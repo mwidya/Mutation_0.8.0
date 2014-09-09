@@ -19,10 +19,19 @@ public:
     threeDBoard(ofFbo *fbo);
     void update();
     void setup();
+    void keyPressed(int key);
+    void drawBackground();
+    void drawBounds();
+    void drawBox();
     
     ofBoxPrimitive box;
-    float offsetZ;
+    ofLight pointLight;
+    ofLight pointLight2;
+    ofLight pointLight3;
+    ofMaterial material;
     
+    float offsetZ;
+    bool rotate;
 };
 
 #endif /* defined(__Mutation__testBoard__) */

@@ -398,7 +398,7 @@ void ofApp::keyPressed(int key){
         soundIsPlaying = !soundIsPlaying;
     }
     
-    if (key==OF_KEY_UP || key==OF_KEY_DOWN) {
+    if (key==OF_KEY_UP || key==OF_KEY_DOWN || key=='r') {
         for (int i = 0; i<channels.size(); i++) {
             channel *ch = channels[i];
             ch->mThreeDBoard->keyPressed(key);
