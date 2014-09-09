@@ -306,8 +306,8 @@ void ofApp::updateOneColorBoard(channel *channel){
 } // Board E
 
 void ofApp::updateThreeDBoard(channel *channel){
-    if ((channel->mChannelNumber == 1) || (channel->mChannelNumber == 2) || (channel->mChannelNumber == 3) ||
-        (channel->mChannelNumber == 6) || (channel->mChannelNumber == 7) || (channel->mChannelNumber == 8)) {
+    if ((channel->mChannelNumber == 1) || (channel->mChannelNumber == 2) /*|| (channel->mChannelNumber == 3)
+         || (channel->mChannelNumber == 6) || (channel->mChannelNumber == 7) || (channel->mChannelNumber == 8)*/) {
         channel->mThreeDBoard->update();
     }
     else{
@@ -398,7 +398,7 @@ void ofApp::keyPressed(int key){
         soundIsPlaying = !soundIsPlaying;
     }
     
-    if (key==OF_KEY_UP || key==OF_KEY_DOWN || key=='r') {
+    if (key==OF_KEY_UP || key==OF_KEY_DOWN || key=='r' || key=='x' || key=='y' || key=='z' || key=='w') {
         for (int i = 0; i<channels.size(); i++) {
             channel *ch = channels[i];
             ch->mThreeDBoard->keyPressed(key);

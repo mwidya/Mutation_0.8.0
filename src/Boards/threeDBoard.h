@@ -28,6 +28,11 @@ public:
     ofLight pointLight;
     ofLight pointLight2;
     ofLight pointLight3;
+    bool bPointLight;
+    bool bPointLight2;
+    bool bPointLight3;
+    bool drawThings;
+    
     ofMaterial material;
     
     float offsetZ;
