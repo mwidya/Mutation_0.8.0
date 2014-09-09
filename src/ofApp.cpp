@@ -9,9 +9,10 @@
 void ofApp::setupSound(){
     
 //    mSoundPlayer.loadSound("music/02 Blood Stevia Sex Magik.mp3");
-    mSoundPlayer.loadSound("music/Cmin_geschisse_v3.wav");
+    mSoundPlayer.loadSound("music/Cmin_geschisse_v3_loop.wav");
 //    mSoundPlayer.loadSound("music/St_able_v1.wav");
 //    mSoundPlayer.loadSound("music/testPattern.mp3");
+    mSoundPlayer.setLoop(true);
     
     
     fftSmoothed = new float[8192];
@@ -395,6 +396,13 @@ void ofApp::keyPressed(int key){
         }
         
         soundIsPlaying = !soundIsPlaying;
+    }
+    
+    if (key==OF_KEY_UP || key==OF_KEY_DOWN) {
+        for (int i = 0; i<channels.size(); i++) {
+            channel *ch = channels[i];
+            ch->mThreeDBoard->keyPressed(key);
+        }
     }
     
 }

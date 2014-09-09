@@ -478,10 +478,6 @@
 		EE81F63519B1BF5D0004AAD1 /* Boards */ = {
 			isa = PBXGroup;
 			children = (
-				EE81F63619B1BF5D0004AAD1 /* board.cpp */,
-				EE81F63719B1BF5D0004AAD1 /* board.h */,
-				EE5E937D19B1D2DB000DD715 /* chessField.cpp */,
-				EE5E937E19B1D2DB000DD715 /* chessField.h */,
 				EE81F63819B1BF5D0004AAD1 /* chessBoard1.cpp */,
 				EE81F63919B1BF5D0004AAD1 /* chessBoard1.h */,
 				EE81F63A19B1BF5D0004AAD1 /* chessBoard2.cpp */,
@@ -494,6 +490,10 @@
 				EE81F64119B1BF5D0004AAD1 /* threeDBoard.h */,
 				EE119BD619B24B180033DCD6 /* movingLightsBoard.cpp */,
 				EE119BD719B24B180033DCD6 /* movingLightsBoard.h */,
+				EE81F63619B1BF5D0004AAD1 /* board.cpp */,
+				EE81F63719B1BF5D0004AAD1 /* board.h */,
+				EE5E937D19B1D2DB000DD715 /* chessField.cpp */,
+				EE5E937E19B1D2DB000DD715 /* chessField.h */,
 			);
 			path = Boards;
 			sourceTree = "<group>";
