@@ -68,6 +68,7 @@ public:
     
     int numberofBoards = 7;
     bool *boardsArray;
+    bool info = true;
     
     int activeChannel = -1;
     int activeBoard = -1;

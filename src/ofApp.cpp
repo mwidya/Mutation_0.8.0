@@ -1,10 +1,11 @@
 #include "ofApp.h"
 #include "constants.h"
 
-#define START_CHANNEL 2
-#define START_BOARD 5
+#define START_CHANNEL 7
+#define START_BOARD 4
 
 // ------------------------------------ Setups & Configurations ------------------------------------
+#pragma mark - Setups & Configurations
 
 void ofApp::setupSound(){
     
@@ -126,6 +127,7 @@ void ofApp::setup(){
 }
 
 // ------------------------------------ Updates ------------------------------------
+#pragma mark - Updates
 
 void ofApp::updateTcpServer(){
     
@@ -210,7 +212,9 @@ void ofApp::update(){
     
 }
 
+
 // ----- board programs -----
+#pragma mark board programs
 
 void ofApp::updateChessBoard1(channel *channel){
     channel->mChessBoard1->update(fftSmoothed);
@@ -317,6 +321,7 @@ void ofApp::updateThreeDBoard(channel *channel){
 } // Board F
 
 // ------------------------------------ of Lifecycle ------------------------------------
+#pragma mark - of Lifecycle
 
 void ofApp::draw(){
     
@@ -331,29 +336,35 @@ void ofApp::draw(){
         }
     }
     
-    if (tcpConnected) {
-        string str = "TCP server is online at port: " + ofToString(tcpServer.getPort()) + ", clients: " + ofToString(tcpServer.getNumClients());
-        ofDrawBitmapString(str, 10, ofGetHeight()-15);
+    if (info) {
+        ofSetColor(255,255,255,128);
         
-        for(unsigned int i = 0; i <  (unsigned int)tcpServer.getLastID(); i++){
-            if( !tcpServer.isClientConnected(i) ) {
-                continue;
-            }else{
-                string str = "TCP client with IP " + ofToString(tcpServer.getClientIP(i))+" is connected.";
-                ofDrawBitmapString(str, 10, ofGetHeight()-(15*(i+2)));
+        if (tcpConnected) {
+            string str = "TCP server is online at port: " + ofToString(tcpServer.getPort()) + ", clients: " + ofToString(tcpServer.getNumClients());
+            ofDrawBitmapString(str, 10, ofGetHeight()-15);
+            
+            for(unsigned int i = 0; i <  (unsigned int)tcpServer.getLastID(); i++){
+                if( !tcpServer.isClientConnected(i) ) {
+                    continue;
+                }else{
+                    string str = "TCP client with IP " + ofToString(tcpServer.getClientIP(i))+" is connected.";
+                    ofDrawBitmapString(str, 10, ofGetHeight()-(15*(i+2)));
+                }
+            }
+        }
+        
+        ofDrawBitmapString("framerate:" + ofToString(ofGetFrameRate()) , ofGetWidth()-290, ofGetHeight()-15);
+        ofDrawBitmapString("seconds:" + ofToString((int)ofGetElapsedTimef()) , ofGetWidth()-100, ofGetHeight()-15);
+        
+        float width = (float)(ofGetWidth()) / nBandsToGet;
+        for (int i = 0;i < nBandsToGet; i++){
+            ofRect(i*width,ofGetHeight()-100,width,-(fftSmoothed[i] * 200));
+            if ((i%5)==0) {
+                ofDrawBitmapString(ofToString(i), i*width, ofGetHeight()-100+15);
             }
         }
     }
     
-    ofDrawBitmapString("framerate:" + ofToString(ofGetFrameRate()) , ofGetWidth()-290, ofGetHeight()-15);
-    ofDrawBitmapString("seconds:" + ofToString((int)ofGetElapsedTimef()) , ofGetWidth()-100, ofGetHeight()-15);
-	
-	ofSetColor(255,255,255,255);
-    float width = (float)(ofGetWidth()) / nBandsToGet;
-	for (int i = 0;i < nBandsToGet; i++){
-		ofRect(i*width,ofGetHeight()-100,width,-(fftSmoothed[i] * 200));
-        ofDrawBitmapString(ofToString(i), i*width, ofGetHeight()-100-15);
-	}
 }
 
 void ofApp::keyPressed(int key){
@@ -405,6 +416,10 @@ void ofApp::keyPressed(int key){
         }
     }
     
+    if (key==',') {
+        info = !info;
+    }
+    
 }
 
 void ofApp::mousePressed(int x, int y, int button){
@@ -428,6 +443,7 @@ void ofApp::mouseReleased(int x, int y, int button){
 }
 
 // ------------------------------------ Channel controlling ------------------------------------
+#pragma mark - Channel controlling
 
 void ofApp::setBoardsArrayTrueOnlyAtIndex(int index){
     for (int i = 0; i < numberofBoards; i++) {
@@ -441,6 +457,7 @@ void ofApp::setBoardsArrayTrueOnlyAtIndex(int index){
 }
 
 // ------------------------------------ Network Communication ------------------------------------
+#pragma mark - Network Communication
 
 ofVec2f ofApp::normalizedPointToScreenPoint(ofVec2f normalizedPoint){
     ofVec2f point;
@@ -468,8 +485,10 @@ void ofApp::parseJSONString(string str){
 }
 
 // ------------------------------------ Boards ------------------------------------
+#pragma mark - Boards
 
 // ----- chessBoard2 delegate -----
+#pragma mark chessBoard2 delegate
 
 void ofApp::chessBoard2DidTriggerAtChessFieldIndex(chessBoard2EventArgs &arg){
     

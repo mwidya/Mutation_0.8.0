@@ -33,8 +33,5 @@ void oneColorBoard::update(){
     ofLine(mFbo->getWidth(), mFbo->getHeight()-halfLineWidth, 0, mFbo->getHeight()-halfLineWidth);
     ofLine(halfLineWidth, mFbo->getHeight(), halfLineWidth, 0);
     
-    ofSetColor(0, 255, 0);//stroke color
-    mFont.drawString("Bangin !", 20, mFbo->getHeight()-20);
-    
     ofSetLineWidth(1.0f);
 }
