@@ -9,8 +9,8 @@
 #ifndef __Mutation_080__constants__
 #define __Mutation_080__constants__
 
-#define IP "10.0.0.1"
-#define PORT 12333
+#define IP "127.0.0.1"
+#define PORT 11999
 
 extern const float factor;
 // 1.0 = 1 meter

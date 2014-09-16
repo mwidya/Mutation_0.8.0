@@ -13,14 +13,14 @@ public:
     
     void setupSound();
     void setupChannels();
-    void setupTcpServer();
+    void setupTcp();
     void setupBoards();
     void setup();
     
     // ------------------------------------ Updates ------------------------------------
     
     void updateSound();
-    void updateTcpServer();
+    void updateTcp();
     void updateBoardsForChannel(channel *channel);
     void updateChannels();
     void update();
@@ -82,8 +82,7 @@ public:
     
     // ------------------------------------ Network Communication ------------------------------------
     
-    ofxTCPServer tcpServer;
-    bool tcpConnected;
+    ofxTCPClient tcpClient;
     int deltaTime = 0;
     int connectTime = 0;
     

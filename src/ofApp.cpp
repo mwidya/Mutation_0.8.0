@@ -62,10 +62,10 @@ void ofApp::setupChannels(){
     
 }
 
-void ofApp::setupTcpServer(){
+void ofApp::setupTcp(){
     
-    tcpConnected = tcpServer.setup(PORT);
-    tcpServer.setMessageDelimiter("\n");
+    tcpClient.setup(IP, PORT);
+    tcpClient.setMessageDelimiter("\n");
 	
 }
 
@@ -119,7 +119,7 @@ void ofApp::setup(){
     
     ofSetDataPathRoot("../Resources/data/");
     
-    setupTcpServer();
+    setupTcp();
     setupSound();
     setupChannels();
     setupBoards();
@@ -129,28 +129,34 @@ void ofApp::setup(){
 // ------------------------------------ Updates ------------------------------------
 #pragma mark - Updates
 
-void ofApp::updateTcpServer(){
+void ofApp::updateTcp(){
     
-    for(unsigned int i = 0; i <  (unsigned int)tcpServer.getLastID(); i++){
+    if (tcpClient.isConnected())
+    {
+        string str = tcpClient.receive();
         
-        if( !tcpServer.isClientConnected(i) ) {
-            continue;
-        }
-        
-        string msgRx = tcpServer.receive(i);
-        
-        if (msgRx.length() > 0) {
-            
-            parseJSONString(msgRx);
-            
-            for (int j = 0; j < channels.size(); j++) {
+        if( str.length() > 0 )
+        {
+            cout << "str = " << str << endl;
+            parseJSONString(str);
+            for (int j = 0; j < channels.size(); j++)
+            {
                 channel *ch = channels[j];
-                if (ch->mChessBoard2->mMarker->mId == mId) {
+                if (ch->mChessBoard2->mMarker->mId == mId)
+                {
                     ch->mChessBoard2->tiggerAtPoint(mScreenPoint.x, mScreenPoint.y, mEvent);
                 }
             }
         }
     }
+    else
+    {
+        deltaTime = ofGetElapsedTimeMillis() - connectTime;
+		if( deltaTime > 5000 ){
+			setupTcp();
+			connectTime = ofGetElapsedTimeMillis();
+		}
+	}
 }
 
 void ofApp::updateSound(){
@@ -207,8 +213,8 @@ void ofApp::updateChannels(){
 void ofApp::update(){
     
     updateSound();
-    updateTcpServer();
     updateChannels();
+    updateTcp();
     
 }
 
@@ -339,20 +345,15 @@ void ofApp::draw(){
     if (info) {
         ofSetColor(255,255,255,128);
         
-        if (tcpConnected) {
-            string str = "TCP server is online at port: " + ofToString(tcpServer.getPort()) + ", clients: " + ofToString(tcpServer.getNumClients());
-            ofDrawBitmapString(str, 10, ofGetHeight()-15);
-            
-            for(unsigned int i = 0; i <  (unsigned int)tcpServer.getLastID(); i++){
-                if( !tcpServer.isClientConnected(i) ) {
-                    continue;
-                }else{
-                    string str = "TCP client with IP " + ofToString(tcpServer.getClientIP(i))+" is connected.";
-                    ofDrawBitmapString(str, 10, ofGetHeight()-(15*(i+2)));
-                }
-            }
+        string tcpString = "";
+        if (tcpClient.isConnected()) {
+            tcpString = "TCP client is connected to ip " + ofToString(tcpClient.getIP()) + " at port: " + ofToString(tcpClient.getPort());
+        }
+        else{
+            tcpString = "TCP client couldn't connect to ip " + ofToString(IP) + " at port: " + ofToString(PORT);
         }
         
+        ofDrawBitmapString(tcpString, 10, ofGetHeight()-15);
         ofDrawBitmapString("framerate:" + ofToString(ofGetFrameRate()) , ofGetWidth()-290, ofGetHeight()-15);
         ofDrawBitmapString("seconds:" + ofToString((int)ofGetElapsedTimef()) , ofGetWidth()-100, ofGetHeight()-15);
         
@@ -469,8 +470,6 @@ ofVec2f ofApp::normalizedPointToScreenPoint(ofVec2f normalizedPoint){
 }
 
 void ofApp::parseJSONString(string str){
-    
-    cout << "str = " << str << endl;
     
     mJsonElement = ofxJSONElement(str);
     
