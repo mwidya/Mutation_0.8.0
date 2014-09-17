@@ -17,9 +17,15 @@ threeDBoard::threeDBoard(ofFbo *fbo){
 
 void threeDBoard::setup(){
     
-    offsetZ = 0.0f;//-5000.0f*factor;
+    width = mFbo->getWidth();
+    height = mFbo->getHeight();
     
-    if ( mChannelNumber==2 || mChannelNumber==3 || mChannelNumber==7 || mChannelNumber==8) {
+    offsetZ = 0.0f;//-800.0f*factor;
+    
+    plane.set(width, height);
+    plane.setPosition(width*.5f, height*.5f, offsetZ);
+    
+    /*if ( mChannelNumber==2 || mChannelNumber==3 || mChannelNumber==7 || mChannelNumber==8) {
         box.set(mFbo->getWidth(), mFbo->getHeight(), mAscendantBoard->mFbo->getHeight());
         box.setPosition(mFbo->getWidth()*.5f, mFbo->getHeight()*.5f, -(mAscendantBoard->mFbo->getHeight()));
     }
@@ -33,13 +39,11 @@ void threeDBoard::setup(){
     }
     else if ( mChannelNumber==1 || mChannelNumber==3 || mChannelNumber==6 || mChannelNumber==8){
         box.setPosition(box.getPosition().x, box.getPosition().y, -1970.0f*factor);
-    }
-    
-//    box.rotate(-25, 1, 0, 0);
+    }*/
     
     ofSetSmoothLighting(true);
-    pointLight.setDiffuseColor( ofFloatColor(.85, .85, .55) );
-    pointLight.setSpecularColor( ofFloatColor(1.f, 1.f, 1.f));
+    pointLight.setDiffuseColor( ofFloatColor(19.f/255.f,94.f/255.f,77.f/255.f)  );
+    pointLight.setSpecularColor( ofFloatColor(18.f/255.f,150.f/255.f,135.f/255.f));
     
     pointLight2.setDiffuseColor( ofFloatColor( 238.f/255.f, 57.f/255.f, 135.f/255.f ));
     pointLight2.setSpecularColor(ofFloatColor(.8f, .8f, .9f));
@@ -55,6 +59,8 @@ void threeDBoard::setup(){
     bPointLight = false;
     bPointLight2 = false;
     bPointLight3 = false;
+    
+    drawThings = true;
 }
 
 void threeDBoard::drawBox(){
@@ -64,10 +70,51 @@ void threeDBoard::drawBox(){
     ofEnableDepthTest();
     ofEnableLighting();
     
-    box.setPosition(box.getPosition().x, box.getPosition().y, box.getPosition().z + offsetZ);
+    plane.setPosition(plane.getPosition().x, plane.getPosition().y, plane.getPosition().z + offsetZ);
+    if (bPointLight) {
+        pointLight.setPosition(plane.getPosition().x,
+                               plane.getPosition().y,
+                               plane.getPosition().z + sin(ofGetElapsedTimef()*.5f)*plane.getHeight()*1.5 + offsetZ);
+        pointLight.lookAt(plane);
+        pointLight.enable();
+    }
+    else{
+        pointLight.disable();
+    }
+    
+    if (bPointLight2) {
+        pointLight2.setPosition((plane.getPosition().x)+ cos(ofGetElapsedTimef()*.15)*(plane.getWidth()*.3),
+                                plane.getPosition().y + sin(ofGetElapsedTimef()*.7)*(plane.getHeight()),
+                                offsetZ);
+        pointLight2.lookAt(plane);
+        pointLight2.enable();
+    }
+    else{
+        pointLight2.disable();
+    }
+    
+    if (bPointLight3) {
+        pointLight3.setPosition(cos(ofGetElapsedTimef()*1.5) * plane.getPosition().x,
+                                sin(ofGetElapsedTimef()*1.5f) * plane.getPosition().y,
+                                cos(ofGetElapsedTimef()*.2) + offsetZ);
+        pointLight3.lookAt(plane);
+        pointLight3.enable();
+    }
+    else{
+        pointLight3.disable();
+    }
+    
+    /*box.setPosition(box.getPosition().x, box.getPosition().y, box.getPosition().z + offsetZ);
+    
+    if (rotate) {
+     box.rotate(cos(ofGetElapsedTimef()*.6), 1.0, 0.0, 0.0);
+     box.rotate(sin(ofGetElapsedTimef()*.4), 0, 1, 0);
+     }
     
     if (bPointLight) {
-        pointLight.setPosition((box.getPosition().x), box.getPosition().y + cos(ofGetElapsedTimef())*(box.getHeight()*2), box.getPosition().z + sin(ofGetElapsedTimef())*(box.getDepth()*2) + offsetZ);
+        pointLight.setPosition((box.getPosition().x),
+                               box.getPosition().y + cos(ofGetElapsedTimef())*(box.getHeight()*2),
+                               box.getPosition().z + sin(ofGetElapsedTimef())*(box.getDepth()*2) + offsetZ);
         pointLight.lookAt(box);
         pointLight.enable();
     }
@@ -76,7 +123,9 @@ void threeDBoard::drawBox(){
     }
     
     if (bPointLight2) {
-        pointLight2.setPosition((box.getPosition().x)+ cos(ofGetElapsedTimef()*.15)*(box.getWidth()*.3), box.getPosition().y + sin(ofGetElapsedTimef()*.7)*(box.getHeight()), box.getDepth() + offsetZ);
+        pointLight2.setPosition((box.getPosition().x)+ cos(ofGetElapsedTimef()*.15)*(box.getWidth()*.3),
+                                box.getPosition().y + sin(ofGetElapsedTimef()*.7)*(box.getHeight()),
+                                box.getDepth() + offsetZ);
         pointLight2.lookAt(box);
         pointLight2.enable();
     }
@@ -85,13 +134,15 @@ void threeDBoard::drawBox(){
     }
     
     if (bPointLight3) {
-        pointLight3.setPosition(cos(ofGetElapsedTimef()*1.5) * box.getPosition().x, sin(ofGetElapsedTimef()*1.5f) * box.getPosition().y, cos(ofGetElapsedTimef()*.2) * box.getDepth() + offsetZ);
+        pointLight3.setPosition(cos(ofGetElapsedTimef()*1.5) * box.getPosition().x,
+                                sin(ofGetElapsedTimef()*1.5f) * box.getPosition().y,
+                                cos(ofGetElapsedTimef()*.2) * box.getDepth() + offsetZ);
         pointLight3.lookAt(box);
         pointLight3.enable();
     }
     else{
         pointLight3.disable();
-    }
+    }*/
 
     if (drawThings) {
         pointLight.draw();
@@ -101,16 +152,12 @@ void threeDBoard::drawBox(){
     
     offsetZ = 0.0f;
     
-    if (rotate) {
-        box.rotate(cos(ofGetElapsedTimef()*.6), 1.0, 0.0, 0.0);
-        box.rotate(sin(ofGetElapsedTimef()*.4), 0, 1, 0);
-    }
-    
 	material.begin();
     
     ofFill();
     ofSetColor(255);
-    box.draw();
+    plane.draw();
+    /*box.draw();*/
     
     material.end();
     
@@ -129,9 +176,11 @@ void threeDBoard::drawBackground(){
 
 void threeDBoard::drawBounds(){
     
+    float lineWidth = 20*factor;
+    ofSetLineWidth(lineWidth);
     ofNoFill();
     ofSetColor(255, 0, 0);
-    ofRect(1, 1, mFbo->getWidth()-2, mFbo->getHeight()-2);
+    ofRect(lineWidth, lineWidth, mFbo->getWidth()-(lineWidth*2), mFbo->getHeight()-(lineWidth*2));
     ofFill();
     
 }

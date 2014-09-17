@@ -12,6 +12,9 @@
 #define IP "127.0.0.1"
 #define PORT 11999
 
+#define START_CHANNEL 0
+#define START_BOARD 5
+
 extern const float factor;
 // 1.0 = 1 meter
 extern const float levelDistance;

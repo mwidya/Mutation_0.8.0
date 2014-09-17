@@ -24,7 +24,9 @@ public:
     void drawBounds();
     void drawBox();
     
-    ofBoxPrimitive box;
+    /*ofBoxPrimitive box;*/
+    ofPlanePrimitive plane;
+    
     ofLight pointLight;
     ofLight pointLight2;
     ofLight pointLight3;
@@ -35,6 +37,7 @@ public:
     
     ofMaterial material;
     
+    float width, height;
     float offsetZ;
     bool rotate;
 };

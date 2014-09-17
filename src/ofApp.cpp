@@ -1,9 +1,6 @@
 #include "ofApp.h"
 #include "constants.h"
 
-#define START_CHANNEL 7
-#define START_BOARD 4
-
 // ------------------------------------ Setups & Configurations ------------------------------------
 #pragma mark - Setups & Configurations
 
@@ -316,13 +313,16 @@ void ofApp::updateOneColorBoard(channel *channel){
 } // Board E
 
 void ofApp::updateThreeDBoard(channel *channel){
-    if ((channel->mChannelNumber == 1) || (channel->mChannelNumber == 2) /*|| (channel->mChannelNumber == 3)
-         || (channel->mChannelNumber == 6) || (channel->mChannelNumber == 7) || (channel->mChannelNumber == 8)*/) {
-        channel->mThreeDBoard->update();
-    }
-    else{
-        channel->mThreeDBoard->clear();
-    }
+    
+    channel->mThreeDBoard->update();
+    
+//    if ((channel->mChannelNumber == 1) || (channel->mChannelNumber == 2) /*|| (channel->mChannelNumber == 3)
+//         || (channel->mChannelNumber == 6) || (channel->mChannelNumber == 7) || (channel->mChannelNumber == 8)*/) {
+//        channel->mThreeDBoard->update();
+//    }
+//    else{
+//        channel->mThreeDBoard->clear();
+//    }
     
 } // Board F
 
