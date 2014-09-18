@@ -9,10 +9,11 @@
 #ifndef __Mutation_080__constants__
 #define __Mutation_080__constants__
 
+//#define IP "169.254.102.35"
 #define IP "127.0.0.1"
-#define PORT 11999
+#define PORT 12333
 
-#define START_CHANNEL 0
+#define START_CHANNEL 4
 #define START_BOARD 5
 
 extern const float factor;

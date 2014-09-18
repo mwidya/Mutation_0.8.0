@@ -20,6 +20,11 @@ void threeDBoard::setup(){
     width = mFbo->getWidth();
     height = mFbo->getHeight();
     
+    bgRect.x = 0;
+    bgRect.y = 0;
+    bgRect.width = width;
+    bgRect.height = height;
+    
     offsetZ = 0.0f;//-800.0f*factor;
     
     plane.set(width, height);
@@ -60,7 +65,7 @@ void threeDBoard::setup(){
     bPointLight2 = false;
     bPointLight3 = false;
     
-    drawThings = true;
+    drawThings = false;
 }
 
 void threeDBoard::drawBox(){
@@ -170,7 +175,7 @@ void threeDBoard::drawBox(){
 void threeDBoard::drawBackground(){
     
     ofSetColor(0, 0, 0);
-    ofRect(0, 0, mFbo->getWidth(), mFbo->getHeight());
+    ofRect(bgRect);
     
 }
 
@@ -206,7 +211,8 @@ void threeDBoard::keyPressed(int key){
         rotate = !rotate;
     }
     else if (key=='x') {
-        bPointLight = !bPointLight;
+//        bPointLight = !bPointLight;
+        sendLight();
     }
     else if (key=='y') {
         bPointLight2 = !bPointLight2;
@@ -219,7 +225,18 @@ void threeDBoard::keyPressed(int key){
     }
 }
 
+void threeDBoard::tiggerAtPoint(int x_, int y_, string event_){
+    if(bgRect.inside(x_, y_)){
+        sendLight();
+    }
+}
 
+void threeDBoard::sendLight(){
+    soundPlayer.loadSound("music/fis4.aif");
+    soundPlayer.play();
+    bPointLight = !bPointLight;
+    
+}
 
 
 

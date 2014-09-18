@@ -313,15 +313,9 @@ void ofApp::updateOneColorBoard(channel *channel){
 } // Board E
 
 void ofApp::updateThreeDBoard(channel *channel){
-    
-    channel->mThreeDBoard->update();
-    
-//    if ((channel->mChannelNumber == 1) || (channel->mChannelNumber == 2) /*|| (channel->mChannelNumber == 3)
-//         || (channel->mChannelNumber == 6) || (channel->mChannelNumber == 7) || (channel->mChannelNumber == 8)*/) {
-//        channel->mThreeDBoard->update();
-//    }
-//    else{
-//        channel->mThreeDBoard->clear();
+//    if (channel->mChannelNumber == 4) {
+        channel->mThreeDBoard->update();
+        channel->mThreeDBoard->mMarker->draw();
 //    }
     
 } // Board F
@@ -424,20 +418,34 @@ void ofApp::keyPressed(int key){
 }
 
 void ofApp::mousePressed(int x, int y, int button){
-    for (int i = 0; i<channels.size(); i++) {
-        channel *channel = channels[i];
-        if (i==4) {
-            channel->mChessBoard2->tiggerAtPoint(x, y, "press");
+    
+    if (activeBoard == 1) {
+        for (int i = 0; i<channels.size(); i++) {
+            channel *channel = channels[i];
+            if (i==4) {
+                channel->mChessBoard2->tiggerAtPoint(x, y, "press");
+            }
+        }
+    }
+    
+    if (activeBoard == 5) {
+        for (int i = 0; i<channels.size(); i++) {
+            channel *channel = channels[i];
+            if (i==4) {
+                channel->mThreeDBoard->tiggerAtPoint(x, y, "press");
+            }
         }
     }
     
 }
 
 void ofApp::mouseReleased(int x, int y, int button){
-    for (int i = 0; i<channels.size(); i++) {
-        channel *channel = channels[i];
-        if (i==4) {
-            channel->mChessBoard2->tiggerAtPoint(x, y, "release");
+    if (activeBoard == 1) {
+        for (int i = 0; i<channels.size(); i++) {
+            channel *channel = channels[i];
+            if (i==4) {
+                channel->mChessBoard2->tiggerAtPoint(x, y, "release");
+            }
         }
     }
     

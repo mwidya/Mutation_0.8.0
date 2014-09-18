@@ -23,6 +23,12 @@ public:
     void drawBackground();
     void drawBounds();
     void drawBox();
+    void tiggerAtPoint(int x_, int y_, string event_);
+    void sendLight();
+    
+    ofRectangle bgRect;
+    
+    ofSoundPlayer soundPlayer;
     
     /*ofBoxPrimitive box;*/
     ofPlanePrimitive plane;
